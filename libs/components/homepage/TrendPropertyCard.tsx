@@ -9,13 +9,15 @@ import { REACT_APP_API_URL } from '../../config';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
+import { likeTargetPropertyHandler } from '../../utils';
 
 interface TrendPropertyCardProps {
 	property: Property;
+	likePropertyHandler: any;
 }
 
 const TrendPropertyCard = (props: TrendPropertyCardProps) => {
-	const { property } = props;
+	const { property, likePropertyHandler } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -60,7 +62,7 @@ const TrendPropertyCard = (props: TrendPropertyCardProps) => {
 								<RemoveRedEyeIcon />
 							</IconButton>
 							<Typography className="view-cnt">{property?.propertyViews}</Typography>
-							<IconButton color={'default'}>
+							<IconButton color={'default'} onClick={() => likePropertyHandler(user, property?._id)}>
 								{property?.meLiked && property?.meLiked[0]?.myFavorite ? (
 									<FavoriteIcon style={{ color: 'red' }} />
 								) : (
@@ -111,7 +113,7 @@ const TrendPropertyCard = (props: TrendPropertyCardProps) => {
 								<RemoveRedEyeIcon />
 							</IconButton>
 							<Typography className="view-cnt">{property?.propertyViews}</Typography>
-							<IconButton color={'default'}>
+							<IconButton color={'default'} onClick={() => likePropertyHandler(user, property?._id)}>
 								{property?.meLiked && property?.meLiked[0]?.myFavorite ? (
 									<FavoriteIcon style={{ color: 'red' }} />
 								) : (
