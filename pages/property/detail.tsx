@@ -27,7 +27,7 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { GET_PROPERTIES, GET_PROPERTY } from '../../apollo/user/query';
+import { GET_COMMENTS, GET_PROPERTIES, GET_PROPERTY } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 import { LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
 import { Direction, Message } from '../../libs/enums/common.enum';
@@ -61,6 +61,8 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	/** APOLLO REQUESTS **/
 	const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
 
+	/** GET_PROPERTY **/
+
 	const {
 		loading: getPropertyLoading,
 		data: getPropertyData,
@@ -77,6 +79,8 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 		},
 	});
 
+	/** GET_PROPERTIES **/
+
 	const {
 		loading: getPropertiesLoading,
 		data: getPropertiesData,
@@ -91,7 +95,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 				sort: 'createdAt',
 				direction: Direction.DESC,
 				search: {
-					locationList: [property?.propertyLocation],
+					locationList: property?.propertyLocation ? [property?.propertyLocation] : [],
 				},
 			},
 		},
@@ -101,6 +105,26 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 			if (data?.getProperties?.list) {
 				setDestinationProperties(data.getProperties.list);
 			}
+		},
+	});
+
+	/** GET_COMMENTS **/
+
+	const {
+		loading: getCommentsLoading,
+		data: getCommentsData,
+		error: getCommentsError,
+		refetch: getCommentsRefetch,
+	} = useQuery(GET_COMMENTS, {
+		fetchPolicy: 'cache-and-network',
+		variables: { input: initialComment },
+		skip: !commentInquiry.search.commentRefId,
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			if (data?.getComments?.list) {
+				setPropertyComments(data.getComments.list);
+			}
+			setCommentTotal(data?.getComments?.metaCounter[0]?.total ?? 0);
 		},
 	});
 
@@ -121,7 +145,11 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 		}
 	}, [router]);
 
-	useEffect(() => {}, [commentInquiry]);
+	useEffect(() => {
+		if (commentInquiry.search.commentRefId) {
+			getCommentsRefetch({ input: commentInquiry });
+		}
+	}, [commentInquiry]);
 
 	/** HANDLERS **/
 	const changeImageHandler = (image: string) => {
