@@ -8,6 +8,10 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { T } from '../../types/common';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import { useMutation } from '@apollo/client';
+import { CREATE_BOARD_ARTICLE } from '../../../apollo/user/mutation';
+import { sweetErrorHandling, sweetTopSuccessAlert } from '../../sweetAlert';
+import { Message } from '../../enums/common.enum';
 
 const TuiEditor = () => {
 	const editorRef = useRef<Editor>(null),
@@ -16,6 +20,8 @@ const TuiEditor = () => {
 	const [articleCategory, setArticleCategory] = useState<BoardArticleCategory>(BoardArticleCategory.FREE);
 
 	/** APOLLO REQUESTS **/
+
+	const [createboardArticle] = useMutation(CREATE_BOARD_ARTICLE);
 
 	const memoizedValues = useMemo(() => {
 		const articleTitle = '',
@@ -76,7 +82,42 @@ const TuiEditor = () => {
 		memoizedValues.articleTitle = e.target.value;
 	};
 
-	const handleRegisterButton = async () => {};
+	const handleRegisterButton = async () => {
+		try {
+			const editor = editorRef.current;
+			const articleContent = editor?.getInstance().getHTML() as string;
+			console.log('articleContent: ', articleContent);
+			memoizedValues.articleContent = articleContent;
+
+			// Check if either title or content is empty
+			if (memoizedValues.articleContent === '' && memoizedValues.articleTitle === '') {
+				throw new Error(Message.INSERT_ALL_INPUTS);
+			}
+
+			await createboardArticle({
+				variables: {
+					input: { ...memoizedValues, articleCategory },
+				},
+			});
+
+			await sweetTopSuccessAlert('Article is created successfully', 700);
+
+			await router.push({
+				pathname: '/mypage',
+				query: { category: 'myArticles' },
+			});
+		} catch (err: any) {
+			console.error(err); // Log the actual error object for debugging
+
+			// Handle the specific "INSERT_ALL_INPUTS" error
+			if (err.message === Message.INSERT_ALL_INPUTS) {
+				sweetErrorHandling(err).then();
+			} else {
+				// Handle other unexpected errors
+				sweetErrorHandling(new Error(Message.GENERIC_ERROR_MESSAGE)).then(); // Or a more specific message
+			}
+		}
+	};
 
 	const doDisabledCheck = () => {
 		if (memoizedValues.articleContent === '' || memoizedValues.articleTitle === '') {
@@ -135,6 +176,7 @@ const TuiEditor = () => {
 				ref={editorRef}
 				hooks={{
 					addImageBlobHook: async (image: any, callback: any) => {
+						console.log('=image: ', image);
 						const uploadedImageURL = await uploadImage(image);
 						callback(uploadedImageURL);
 						return false;
