@@ -3,11 +3,14 @@ import { NextPage } from 'next';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Button, Stack, Typography } from '@mui/material';
 import axios from 'axios';
-import { REACT_APP_API_URL } from '../../config';
-import { getJwtToken } from '../../auth';
-import { useReactiveVar } from '@apollo/client';
+import { Messages, REACT_APP_API_URL } from '../../config';
+import { getJwtToken, updateStorage, updateUserInfo } from '../../auth';
+import { useMutation, useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { MemberUpdate } from '../../types/member/member.update';
+import { UPDATE_MEMBER } from '../../../apollo/user/mutation';
+import { sweetErrorHandling, sweetMixinSuccessAlert } from '../../sweetAlert';
+import { Message } from '../../enums/common.enum';
 
 const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 	const device = useDeviceDetect();
@@ -16,6 +19,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 	const [updateData, setUpdateData] = useState<MemberUpdate>(initialValues);
 
 	/** APOLLO REQUESTS **/
+	const [updateMember] = useMutation(UPDATE_MEMBER);
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -74,7 +78,34 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 		}
 	};
 
-	const updatePropertyHandler = useCallback(async () => {}, [updateData]);
+	const updatePropertyHandler = useCallback(async () => {
+		try {
+			if (!user?._id) {
+				// Using optional chaining for safety
+				throw new Error(Messages.error2);
+			}
+
+			updateData._id = user._id;
+			const result = await updateMember({
+				variables: {
+					input: updateData,
+				},
+			});
+
+			// Handle potential undefined result:
+			if (result?.data?.updateMember) {
+				const jwtToken = result.data.updateMember?.accessToken;
+				await updateStorage({ jwtToken });
+				updateUserInfo(jwtToken);
+				await sweetMixinSuccessAlert('Information updated successfully.');
+			} else {
+				// Handle case where updateMember is undefined (e.g., error in mutation)
+				throw new Error(Message.UPDATE_FAILED); // Or a more specific error message
+			}
+		} catch (err: any) {
+			sweetErrorHandling(err).then();
+		}
+	}, [updateData]);
 
 	const doDisabledCheck = () => {
 		if (
