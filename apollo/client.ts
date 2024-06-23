@@ -6,6 +6,7 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { onError } from '@apollo/client/link/error';
 import { getJwtToken } from '../libs/auth';
 import { TokenRefreshLink } from 'apollo-link-token-refresh';
+import { sweetErrorAlert } from '../libs/sweetAlert';
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 function getHeaders() {
@@ -59,13 +60,20 @@ function createIsomorphicLink() {
 
 		const errorLink = onError(({ graphQLErrors, networkError, response }) => {
 			if (graphQLErrors) {
-				graphQLErrors.map(({ message, locations, path, extensions }) =>
-					console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
-				);
+				graphQLErrors.forEach(({ message, locations, path, extensions }) => {
+					console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
+
+					// Check if the error message doesn't include the word "input"
+					if (!message.includes('input')) sweetErrorAlert(message); // Assuming sweetErrorAlert is a custom function to display errors
+				});
 			}
+
 			if (networkError) console.log(`[Network error]: ${networkError}`);
-			// @ts-ignore
+
+			// @ts-ignore (This is a TypeScript directive to suppress errors)
 			if (networkError?.statusCode === 401) {
+				// Handle 401 Unauthorized errors (e.g., token expired)
+				// You would typically redirect to login here
 			}
 		});
 
