@@ -24,7 +24,7 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 	const [totalCount, setTotalCount] = useState<number>(0);
 
 	/** APOLLO REQUESTS **/
-	// APOLLO REQUESTS
+
 	const [likeTargetBoardArticle] = useMutation(LIKE_TARGET_BOARD_ARTICLE);
 
 	const {
