@@ -1,18 +1,20 @@
-import React, { useEffect } from 'react';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
-import Head from 'next/head';
-import Top from '../Top';
-import Footer from '../Footer';
-import { Stack } from '@mui/material';
-import FiberContainer from '../common/FiberContainer';
-import HeaderFilter from '../homepage/HeaderFilter';
-import { userVar } from '../../../apollo/store';
-import { useReactiveVar } from '@apollo/client';
 import { getJwtToken, updateUserInfo } from '../../auth';
+import React, { useEffect } from 'react';
+import { useReactiveVar } from '@apollo/client';
+import { userVar } from '../../../apollo/store';
+import { Stack } from '@mui/material';
+import HeaderServiceFilter from '../homepage/HeaderServiceFilter';
+import useDeviceDetect from '../../hooks/useDeviceDetect';
+import FiberContainer from '../common/FiberContainer';
+import Footer from '../Footer';
+import Head from 'next/head';
 import Chat from '../Chat';
+import Top from '../Top';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import ServiceCategories, { servicesData } from '../homepage/ServiceCategories';
+import FooterService from '../Footer.service';
 
 const withLayoutMain = (Component: any) => {
 	return (props: any) => {
@@ -31,8 +33,8 @@ const withLayoutMain = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>Nestar</title>
-						<meta name={'title'} content={`Nestar`} />
+						<title>HomeCareExperts</title>
+						<meta name={'title'} content={`HomeCareExperts`} />
 					</Head>
 					<Stack id="mobile-wrap">
 						<Stack id={'top'}>
@@ -44,7 +46,7 @@ const withLayoutMain = (Component: any) => {
 						</Stack>
 
 						<Stack id={'footer'}>
-							<Footer />
+							<FooterService />
 						</Stack>
 					</Stack>
 				</>
@@ -53,8 +55,8 @@ const withLayoutMain = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>Nestar</title>
-						<meta name={'title'} content={`Nestar`} />
+						<title>HomeCareExperts</title>
+						<meta name={'title'} content={`HomeCareExperts`} />
 					</Head>
 					<Stack id="pc-wrap">
 						<Stack id={'top'}>
@@ -62,9 +64,11 @@ const withLayoutMain = (Component: any) => {
 						</Stack>
 
 						<Stack className={'header-main'}>
-							<FiberContainer />
+							<ServiceCategories services={servicesData} />
+							{/* <FiberContainer /> */}
 							<Stack className={'container'}>
-								<HeaderFilter />
+								{/* <HeaderFilter /> */}
+								<HeaderServiceFilter />
 							</Stack>
 						</Stack>
 
@@ -75,7 +79,7 @@ const withLayoutMain = (Component: any) => {
 						<Chat />
 
 						<Stack id={'footer'}>
-							<Footer />
+							<FooterService />
 						</Stack>
 					</Stack>
 				</>

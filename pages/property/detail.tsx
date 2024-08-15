@@ -1,38 +1,37 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Box, Button, Checkbox, CircularProgress, Stack, Typography } from '@mui/material';
-import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
-import withLayoutFull from '../../libs/components/layout/LayoutFull';
-import { NextPage } from 'next';
-import Review from '../../libs/components/property/Review';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import { Box, Button, CircularProgress, Stack, Typography } from '@mui/material';
 import SwiperCore, { Autoplay, Navigation, Pagination } from 'swiper';
-import PropertyBigCard from '../../libs/components/common/PropertyBigCard';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import { GET_COMMENTS, GET_PROPERTIES, GET_PROPERTY } from '../../apollo/user/query';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
+import { CREATE_COMMENT, LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
+import { CommentInput, CommentsInquiry } from '../../libs/types/comment/comment.input';
+import { Pagination as MuiPagination } from '@mui/material';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Direction, Message } from '../../libs/enums/common.enum';
+import { REACT_APP_API_URL } from '../../libs/config';
+import { CommentGroup } from '../../libs/enums/comment.enum';
+import { formatterStr } from '../../libs/utils';
+import { useRouter } from 'next/router';
+import { NextPage } from 'next';
+import { Property } from '../../libs/types/property/property';
+import { Comment } from '../../libs/types/comment/comment';
+import { userVar } from '../../apollo/store';
+import { T } from '../../libs/types/common';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
+import PropertyBigCard from '../../libs/components/common/PropertyBigCard';
+import withLayoutFull from '../../libs/components/layout/LayoutFull';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
-import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
-import { useRouter } from 'next/router';
-import { Property } from '../../libs/types/property/property';
+import Review from '../../libs/components/property/Review';
 import moment from 'moment';
-import { formatterStr, likeTargetPropertyHandler } from '../../libs/utils';
-import { REACT_APP_API_URL } from '../../libs/config';
-import { userVar } from '../../apollo/store';
-import { CommentInput, CommentsInquiry } from '../../libs/types/comment/comment.input';
-import { Comment } from '../../libs/types/comment/comment';
-import { CommentGroup } from '../../libs/enums/comment.enum';
-import { Pagination as MuiPagination } from '@mui/material';
 import Link from 'next/link';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { GET_COMMENTS, GET_PROPERTIES, GET_PROPERTY } from '../../apollo/user/query';
-import { T } from '../../libs/types/common';
-import { CREATE_COMMENT, LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
-import { Direction, Message } from '../../libs/enums/common.enum';
-import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
-import { createTheme } from '@mui/material/styles';
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
@@ -61,7 +60,6 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 
 	/** APOLLO REQUESTS **/
 	const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
-
 	const [createComment] = useMutation(CREATE_COMMENT);
 
 	/** GET_PROPERTY **/

@@ -18,22 +18,22 @@ export const GET_AGENTS = gql`
 				memberImage
 				memberAddress
 				memberDesc
-				memberWarnings
-				memberBlocks
 				memberProperties
-				memberRank
+				memberServices
+				memberArticles
+				memberFollowers
+				memberFollowings
 				memberPoints
 				memberLikes
 				memberViews
+				memberComments
+				memberRank
+				memberWarnings
+				memberBlocks
 				deletedAt
 				createdAt
 				updatedAt
 				accessToken
-				meLiked {
-					memberId
-					likeRefId
-					myFavorite
-				}
 			}
 			metaCounter {
 				total
@@ -61,7 +61,7 @@ query GetMember($input: String!) {
         memberLikes
         memberViews
         memberFollowings
-				memberFollowers
+		memberFollowers
         memberRank
         memberWarnings
         memberBlocks
@@ -97,6 +97,8 @@ export const GET_PROPERTY = gql`
 			propertyRooms
 			propertyViews
 			propertyLikes
+			propertyComments
+			propertyRank
 			propertyImages
 			propertyDesc
 			propertyBarter
@@ -107,32 +109,6 @@ export const GET_PROPERTY = gql`
 			constructedAt
 			createdAt
 			updatedAt
-			memberData {
-				_id
-				memberType
-				memberStatus
-				memberAuthType
-				memberPhone
-				memberNick
-				memberFullName
-				memberImage
-				memberAddress
-				memberDesc
-				memberWarnings
-				memberBlocks
-				memberPoints
-				memberLikes
-				memberViews
-				deletedAt
-				createdAt
-				updatedAt
-				accessToken
-			}
-			meLiked {
-				memberId
-				likeRefId
-				myFavorite
-			}
 		}
 	}
 `;
@@ -261,33 +237,6 @@ export const GET_FAVORITES = gql`
 				constructedAt
 				createdAt
 				updatedAt
-				memberData {
-					_id
-					memberType
-					memberStatus
-					memberAuthType
-					memberPhone
-					memberNick
-					memberFullName
-					memberImage
-					memberAddress
-					memberDesc
-					memberProperties
-					memberArticles
-					memberPoints
-					memberLikes
-					memberViews
-					memberComments
-					memberFollowings
-					memberFollowers
-					memberRank
-					memberWarnings
-					memberBlocks
-					deletedAt
-					createdAt
-					updatedAt
-					accessToken
-				}
 			}
 			metaCounter {
 				total
@@ -324,33 +273,6 @@ export const GET_VISITED = gql`
 				constructedAt
 				createdAt
 				updatedAt
-				memberData {
-					_id
-					memberType
-					memberStatus
-					memberAuthType
-					memberPhone
-					memberNick
-					memberFullName
-					memberImage
-					memberAddress
-					memberDesc
-					memberProperties
-					memberArticles
-					memberPoints
-					memberLikes
-					memberViews
-					memberComments
-					memberFollowings
-					memberFollowers
-					memberRank
-					memberWarnings
-					memberBlocks
-					deletedAt
-					createdAt
-					updatedAt
-					accessToken
-				}
 			}
 			metaCounter {
 				total
@@ -378,33 +300,6 @@ export const GET_BOARD_ARTICLE = gql`
 			memberId
 			createdAt
 			updatedAt
-			memberData {
-				_id
-				memberType
-				memberStatus
-				memberAuthType
-				memberPhone
-				memberNick
-				memberFullName
-				memberImage
-				memberAddress
-				memberDesc
-				memberWarnings
-				memberBlocks
-				memberProperties
-				memberRank
-				memberPoints
-				memberLikes
-				memberViews
-				deletedAt
-				createdAt
-				updatedAt
-			}
-			meLiked {
-				memberId
-				likeRefId
-				myFavorite
-			}
 		}
 	}
 `;
@@ -425,33 +320,6 @@ export const GET_BOARD_ARTICLES = gql`
 				memberId
 				createdAt
 				updatedAt
-				meLiked {
-					memberId
-					likeRefId
-					myFavorite
-				}
-				memberData {
-					_id
-					memberType
-					memberStatus
-					memberAuthType
-					memberPhone
-					memberNick
-					memberFullName
-					memberImage
-					memberAddress
-					memberDesc
-					memberWarnings
-					memberBlocks
-					memberProperties
-					memberRank
-					memberPoints
-					memberLikes
-					memberViews
-					deletedAt
-					createdAt
-					updatedAt
-				}
 			}
 			metaCounter {
 				total
@@ -487,13 +355,18 @@ export const GET_COMMENTS = gql`
 					memberImage
 					memberAddress
 					memberDesc
-					memberWarnings
-					memberBlocks
 					memberProperties
-					memberRank
+					memberServices
+					memberArticles
+					memberFollowers
+					memberFollowings
 					memberPoints
 					memberLikes
 					memberViews
+					memberComments
+					memberRank
+					memberWarnings
+					memberBlocks
 					deletedAt
 					createdAt
 					updatedAt
@@ -510,6 +383,7 @@ export const GET_COMMENTS = gql`
 /**************************
  *         FOLLOW        *
  *************************/
+
 export const GET_MEMBER_FOLLOWERS = gql`
 	query GetMemberFollowers($input: FollowInquiry!) {
 		getMemberFollowers(input: $input) {
@@ -613,6 +487,293 @@ export const GET_MEMBER_FOLLOWINGS = gql`
 			metaCounter {
 				total
 			}
+		}
+	}
+`;
+
+/**************************
+ *         SERVICE        *
+ *************************/
+
+export const GET_SERVICE = gql`
+	query GetService($input: String!) {
+		getService(serviceId: $input) {
+			_id
+			serviceCategory
+			serviceStatus
+			serviceLocation
+			pricingModel
+			serviceAddress
+			serviceTitle
+			servicePrice
+			assistanceDIY
+			subscriptionModel
+			emergencyServices
+			referralPrograms
+			serviceViews
+			serviceLikes
+			serviceComments
+			serviceRank
+			serviceImages
+			serviceDescription
+			memberId
+			stoppedAt
+			deletedAt
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const GET_SERVICES = gql`
+	query GetServices($input: ServicesInquiry!) {
+		getServices(input: $input) {
+			list {
+				_id
+				serviceCategory
+				serviceStatus
+				serviceLocation
+				pricingModel
+				serviceAddress
+				serviceTitle
+				servicePrice
+				assistanceDIY
+				subscriptionModel
+				emergencyServices
+				referralPrograms
+				serviceViews
+				serviceLikes
+				serviceComments
+				serviceRank
+				serviceImages
+				serviceDescription
+				memberId
+				stoppedAt
+				deletedAt
+				createdAt
+				updatedAt
+				memberData {
+					_id
+					memberType
+					memberStatus
+					memberAuthType
+					memberPhone
+					memberNick
+					memberFullName
+					memberImage
+					memberAddress
+					memberDesc
+					memberProperties
+					memberServices
+					memberArticles
+					memberFollowers
+					memberFollowings
+					memberPoints
+					memberLikes
+					memberViews
+					memberComments
+					memberRank
+					memberWarnings
+					memberBlocks
+					deletedAt
+					createdAt
+					updatedAt
+					accessToken
+				}
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+export const GET_AGENT_SERVICES = gql`
+	query GetAgentServices($input: AgentServicesInquiry!) {
+		getAgentServices(input: $input) {
+			list {
+				_id
+				serviceCategory
+				serviceStatus
+				serviceLocation
+				pricingModel
+				serviceAddress
+				serviceTitle
+				servicePrice
+				assistanceDIY
+				subscriptionModel
+				emergencyServices
+				referralPrograms
+				serviceViews
+				serviceLikes
+				serviceComments
+				serviceRank
+				serviceImages
+				serviceDescription
+				memberId
+				stoppedAt
+				deletedAt
+				createdAt
+				updatedAt
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+export const GET_FAVORITE_SERVICES = gql`
+	query GetFavorites_Service($input: ServiceOrdinaryInquiry!) {
+		getFavorites_Service(input: $input) {
+			list {
+				_id
+				serviceCategory
+				serviceStatus
+				serviceLocation
+				pricingModel
+				serviceAddress
+				serviceTitle
+				servicePrice
+				assistanceDIY
+				subscriptionModel
+				emergencyServices
+				referralPrograms
+				serviceViews
+				serviceLikes
+				serviceComments
+				serviceRank
+				serviceImages
+				serviceDescription
+				memberId
+				stoppedAt
+				deletedAt
+				createdAt
+				updatedAt
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+export const GET_VISITED_SERVICES = gql`
+	query GetVisited_Service($input: ServiceOrdinaryInquiry!) {
+		getVisited_Service(input: $input) {
+			list {
+				_id
+				serviceCategory
+				serviceStatus
+				serviceLocation
+				pricingModel
+				serviceAddress
+				serviceTitle
+				servicePrice
+				assistanceDIY
+				subscriptionModel
+				emergencyServices
+				referralPrograms
+				serviceViews
+				serviceLikes
+				serviceComments
+				serviceRank
+				serviceImages
+				serviceDescription
+				memberId
+				stoppedAt
+				deletedAt
+				createdAt
+				updatedAt
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+/**************************
+ *       NOTIFICATIONS    *
+ *************************/
+
+export const GET_NOTIFICATIONS = gql`
+	query GetNotifications($input: NotificationsInquiry!) {
+		getNotifications(input: $input) {
+			list {
+				_id
+				notificationType
+				notificationStatus
+				notificationGroup
+				notificationTitle
+				notificationDesc
+				authorId
+				receiverId
+				targetObjectId
+				createdAt
+				updatedAt
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+/**************************
+ *          NOTICE         *
+ *************************/
+
+export const GET_NOTICE = gql`
+	query GetNotice($id: String!) {
+		getNotice(id: $id) {
+			_id
+			noticeCategory
+			noticeStatus
+			noticeTitle
+			noticeContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`; // noticeCategory, noticeStatus, noticeTitle, noticeContent, memberId, createdAt, updatedAt
+
+export const GET_NOTICES = gql`
+	query GetNotices($inquiry: NoticeInquiry!) {
+		getNotices(inquiry: $inquiry) {
+			list {
+				_id
+				noticeCategory
+				noticeStatus
+				noticeTitle
+				noticeContent
+				memberId
+				createdAt
+				updatedAt
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+/**************************
+ *          FAQ        *
+ *************************/
+
+export const GET_FAQS_BY_CATEGORY = gql`
+	query GetFaqsByCategory($category: String!) {
+		getFaqsByCategory(category: $category) {
+			_id
+			faqCategory
+			faqStatus
+			faqTitle
+			faqContent
+			memberId
+			createdAt
+			updatedAt
 		}
 	}
 `;

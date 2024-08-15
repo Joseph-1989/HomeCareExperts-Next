@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Messages, REACT_APP_API_URL } from '../config';
+import { socketVar, userVar } from '../../apollo/store';
 import { Avatar, Box, Stack } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
-import Badge from '@mui/material/Badge';
+import { sweetErrorAlert } from '../sweetAlert';
+import { useReactiveVar } from '@apollo/client';
+import { RippleBadge } from '../../scss/MaterialTheme/styled';
+import { useRouter } from 'next/router';
+import { Member } from '../types/member/member';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread';
-import { useRouter } from 'next/router';
 import ScrollableFeed from 'react-scrollable-feed';
-import { RippleBadge } from '../../scss/MaterialTheme/styled';
-import { useReactiveVar } from '@apollo/client';
-import { socketVar, userVar } from '../../apollo/store';
-import { Member } from '../types/member/member';
-import { Messages, REACT_APP_API_URL } from '../config';
-import { sweetErrorAlert } from '../sweetAlert';
+import SendIcon from '@mui/icons-material/Send';
+import Badge from '@mui/material/Badge';
 
 const NewMessage = (type: any) => {
 	if (type === 'right') {

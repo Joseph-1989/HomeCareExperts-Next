@@ -15,6 +15,7 @@ import { userVar } from '../../apollo/store';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { LIKE_TARGET_MEMBER, SUBSCRIBE, UNSUBSCRIBE } from '../../apollo/user/mutation';
 import { Messages } from '../../libs/config';
+import MyServices from '../../libs/components/member/MemberServices';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -41,7 +42,7 @@ const MemberPage: NextPage = () => {
 			router.replace(
 				{
 					pathname: router.pathname,
-					query: { ...router.query, category: 'properties' },
+					query: { ...router.query, category: 'services' },
 				},
 				undefined,
 				{ shallow: true },
@@ -108,7 +109,7 @@ const MemberPage: NextPage = () => {
 
 	const redirectToMemberPageHandler = async (memberId: string) => {
 		try {
-			if (memberId === user?._id) await router.push(`/mypage?memberId=${memberId}`);
+			if (memberId === user?._id) await router.push(`/userpage?memberId=${memberId}`);
 			else await router.push(`/member?memberId=${memberId}`);
 		} catch (error) {
 			await sweetErrorHandling(error);
@@ -128,7 +129,7 @@ const MemberPage: NextPage = () => {
 							</Stack>
 							<Stack className="main-config" mb={'76px'}>
 								<Stack className={'list-config'}>
-									{category === 'properties' && <MemberProperties />}
+									{category === 'services' && <MyServices />}
 									{category === 'followers' && (
 										<MemberFollowers
 											subscribeHandler={subscribeHandler}

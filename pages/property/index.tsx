@@ -1,21 +1,21 @@
-import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
-import { NextPage } from 'next';
 import { Box, Button, Menu, MenuItem, Pagination, Stack, Typography } from '@mui/material';
-import PropertyCard from '../../libs/components/property/PropertyCard';
+import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
+import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useMutation, useQuery } from '@apollo/client';
+import { LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
+import { Direction, Message } from '../../libs/enums/common.enum';
+import { PropertiesInquiry } from '../../libs/types/property/property.input';
+import { GET_PROPERTIES } from '../../apollo/user/query';
+import { useRouter } from 'next/router';
+import { NextPage } from 'next';
+import { Property } from '../../libs/types/property/property';
+import { T } from '../../libs/types/common';
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import PropertyCard from '../../libs/components/property/PropertyCard';
 import Filter from '../../libs/components/property/Filter';
-import { useRouter } from 'next/router';
-import { PropertiesInquiry } from '../../libs/types/property/property.input';
-import { Property } from '../../libs/types/property/property';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
-import { Direction, Message } from '../../libs/enums/common.enum';
-import { useMutation, useQuery } from '@apollo/client';
-import { GET_PROPERTIES } from '../../apollo/user/query';
-import { T } from '../../libs/types/common';
-import { LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
-import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {

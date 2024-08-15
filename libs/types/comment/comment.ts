@@ -1,5 +1,4 @@
 import { CommentGroup, CommentStatus } from '../../enums/comment.enum';
-import { MeLiked, TotalCounter } from '../property/property';
 import { Member } from '../member/member';
 
 export interface Comment {
@@ -14,6 +13,16 @@ export interface Comment {
 	/** from aggregation **/
 	meLiked?: MeLiked[];
 	memberData?: Member;
+}
+
+export interface MeLiked {
+	memberId: string;
+	likeRefId: string;
+	myFavorite: boolean;
+}
+
+export interface TotalCounter {
+	total: number;
 }
 
 export interface Comments {

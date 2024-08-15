@@ -32,7 +32,7 @@ const CommunityBoards = () => {
 			input: {
 				...searchCommunity,
 				limit: 6,
-				search: { articleCategory: BoardArticleCategory.NEWS },
+				search: { articleCategory: BoardArticleCategory.GENERAL_DISCUSSION },
 			},
 		},
 		notifyOnNetworkStatusChange: true,
@@ -52,7 +52,7 @@ const CommunityBoards = () => {
 			input: {
 				...searchCommunity,
 				limit: 3,
-				search: { articleCategory: BoardArticleCategory.FREE },
+				search: { articleCategory: BoardArticleCategory.HELP_AND_SUPPORT },
 			},
 		},
 		notifyOnNetworkStatusChange: true,
@@ -75,8 +75,8 @@ const CommunityBoards = () => {
 					<Stack className="community-main">
 						<Stack className={'community-left'}>
 							<Stack className={'content-top'}>
-								<Link href={'/community?articleCategory=NEWS'}>
-									<span>News</span>
+								<Link href={'/community?articleCategory=GENERAL_DISCUSSION'}>
+									<span>{BoardArticleCategory.GENERAL_DISCUSSION.replace(/_/g, ' ')}</span>
 								</Link>
 								<img src="/img/icons/arrowBig.svg" alt="" />
 							</Stack>
@@ -88,8 +88,8 @@ const CommunityBoards = () => {
 						</Stack>
 						<Stack className={'community-right'}>
 							<Stack className={'content-top'}>
-								<Link href={'/community?articleCategory=FREE'}>
-									<span>Free</span>
+								<Link href={'/community?articleCategory=ANNOUNCEMENTS'}>
+									<span>{BoardArticleCategory.HELP_AND_SUPPORT.replace(/_/g, ' ')}</span>
 								</Link>
 								<img src="/img/icons/arrowBig.svg" alt="" />
 							</Stack>

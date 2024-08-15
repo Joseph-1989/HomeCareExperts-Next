@@ -1,15 +1,14 @@
 import React from 'react';
 import { Stack, Box, Divider, Typography } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Property } from '../../types/property/property';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { REACT_APP_API_URL } from '../../config';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
-import { likeTargetPropertyHandler } from '../../utils';
+import IconButton from '@mui/material/IconButton';
+import useDeviceDetect from '../../hooks/useDeviceDetect';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 interface TrendPropertyCardProps {
 	property: Property;
@@ -24,7 +23,6 @@ const TrendPropertyCard = (props: TrendPropertyCardProps) => {
 
 	/** HANDLERS **/
 	const pushDetailHandler = async (propertyId: string) => {
-		console.log('propertyId:', propertyId);
 		await router.push({ pathname: '/property/detail', query: { id: propertyId } });
 	};
 

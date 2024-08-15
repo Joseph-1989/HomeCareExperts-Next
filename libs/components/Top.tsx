@@ -1,22 +1,24 @@
-import React, { useCallback, useEffect, useRef } from 'react';
-import { useState } from 'react';
-import { useRouter, withRouter } from 'next/router';
-import { useTranslation } from 'next-i18next';
 import { getJwtToken, logOut, updateUserInfo } from '../auth';
-import { Stack, Box } from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
-import Button from '@mui/material/Button';
-import { alpha, styled } from '@mui/material/styles';
+import React, { useCallback, useEffect } from 'react';
+import { useRouter, withRouter } from 'next/router';
+import { REACT_APP_API_URL } from '../config';
 import Menu, { MenuProps } from '@mui/material/Menu';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import { CaretDown } from 'phosphor-react';
-import useDeviceDetect from '../hooks/useDeviceDetect';
-import Link from 'next/link';
-import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
+import { useTranslation } from 'next-i18next';
 import { useReactiveVar } from '@apollo/client';
+import { alpha, styled } from '@mui/material/styles';
+import { Stack, Box } from '@mui/material';
+import { CaretDown } from 'phosphor-react';
+import { useState } from 'react';
 import { userVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
-import { REACT_APP_API_URL } from '../config';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import useDeviceDetect from '../hooks/useDeviceDetect';
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
+import Link from 'next/link';
+import { NotificationStructure } from '../types/notification/notification';
+import NotificationComponent from './notification/notification-component';
+import { MdNotificationsActive } from 'react-icons/md';
 
 const Top = () => {
 	const device = useDeviceDetect();
@@ -32,6 +34,9 @@ const Top = () => {
 	const [bgColor, setBgColor] = useState<boolean>(false);
 	const [logoutAnchor, setLogoutAnchor] = React.useState<null | HTMLElement>(null);
 	const logoutOpen = Boolean(logoutAnchor);
+	const [notification, setNotification] = useState<NotificationStructure | null>(null);
+
+	/** APOLLO REQUESTS **/
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -56,6 +61,8 @@ const Top = () => {
 	useEffect(() => {
 		const jwt = getJwtToken();
 		if (jwt) updateUserInfo(jwt);
+
+		console.log('jwt', jwt);
 	}, []);
 
 	/** HANDLERS **/
@@ -139,21 +146,31 @@ const Top = () => {
 		window.addEventListener('scroll', changeNavbarColor);
 	}
 
+	console.log('user', user);
+
 	if (device == 'mobile') {
 		return (
 			<Stack className={'top'}>
 				<Link href={'/'}>
 					<div>{t('Home')}</div>
 				</Link>
-				<Link href={'/property'}>
+				{/* <Link href={'/property'}>
 					<div>{t('Properties')}</div>
+				</Link> */}
+				<Link href={'/service'}>
+					<div>{t('Services')}</div>
 				</Link>
 				<Link href={'/agent'}>
-					<div> {t('Agents')} </div>
+					<div> {t('Taskers')} </div>
 				</Link>
-				<Link href={'/community?articleCategory=FREE'}>
-					<div> {t('Community')} </div>
+				<Link href={'/community?articleCategory=GENERAL_DISCUSSION'}>
+					<div> {t('Public')} </div>
 				</Link>
+				{user?._id && (
+					<Link href={'/userpage'}>
+						<div> {t('UserPage')} </div>
+					</Link>
+				)}
 				<Link href={'/cs'}>
 					<div> {t('CS')} </div>
 				</Link>
@@ -166,29 +183,32 @@ const Top = () => {
 					<Stack className={'container'}>
 						<Box component={'div'} className={'logo-box'}>
 							<Link href={'/'}>
-								<img src="/img/logo/logoWhite.svg" alt="" />
+								<img src="/img/logo/logoHomeCareServices.png" alt="" />
 							</Link>
 						</Box>
 						<Box component={'div'} className={'router-box'}>
 							<Link href={'/'}>
 								<div>{t('Home')}</div>
 							</Link>
-							<Link href={'/property'}>
+							{/* <Link href={'/property'}>
 								<div>{t('Properties')}</div>
+							</Link> */}
+							<Link href={'/service'}>
+								<div>{t('Services')}</div>
 							</Link>
 							<Link href={'/agent'}>
-								<div> {t('Agents')} </div>
+								<div> {t('Taskers')} </div>
 							</Link>
-							<Link href={'/community?articleCategory=FREE'}>
-								<div> {t('Community')} </div>
+							<Link href={'/community?articleCategory=GENERAL_DISCUSSION'}>
+								<div> {t('Public')} </div>
 							</Link>
 							{user?._id && (
-								<Link href={'/mypage'}>
-									<div> {t('My Page')} </div>
+								<Link href={'/userpage'}>
+									<div> {t('UserPage')} </div>
 								</Link>
 							)}
 							<Link href={'/cs'}>
-								<div> {t('CS')} </div>
+								<div> {t('Customer Support')} </div>
 							</Link>
 						</Box>
 						<Box component={'div'} className={'user-box'}>
@@ -230,7 +250,7 @@ const Top = () => {
 							)}
 
 							<div className={'lan-box'}>
-								{user?._id && <NotificationsOutlinedIcon className={'notification-icon'} />}
+								{user?._id && <NotificationComponent />}
 								<Button
 									disableRipple
 									className="btn-lang"
@@ -262,7 +282,7 @@ const Top = () => {
 											className="img-flag"
 											src={'/img/flag/langkr.png'}
 											onClick={langChoice}
-											id="uz"
+											id="kr"
 											alt={'koreanFlag'}
 										/>
 										{t('Korean')}

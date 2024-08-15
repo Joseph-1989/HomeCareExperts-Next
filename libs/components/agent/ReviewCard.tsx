@@ -6,11 +6,11 @@ import Moment from 'react-moment';
 import { REACT_APP_API_URL } from '../../config';
 
 interface ReviewCardProps {
-	fromMyPage?: string;
+	fromUserPage?: string;
 	comment: Comment;
 }
 const ReviewCard = (props: ReviewCardProps) => {
-	const { fromMyPage, comment } = props;
+	const { fromUserPage, comment } = props;
 	const device = useDeviceDetect();
 	const imagePath: string = comment?.memberData?.memberImage
 		? `${REACT_APP_API_URL}/${comment?.memberData?.memberImage}`
@@ -33,7 +33,7 @@ const ReviewCard = (props: ReviewCardProps) => {
 					</div>
 				</div>
 				<p>{comment.commentContent}</p>
-				{fromMyPage && (
+				{fromUserPage && (
 					<Stack className="reply-button-box">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
 							<g clipPath="url(#clip0_7037_6550)">

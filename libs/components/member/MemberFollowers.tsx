@@ -67,7 +67,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>NESTAR FOLLOWS MOBILE</div>;
+		return <div>HOME CARE EXPERTS FOLLOWS MOBILE</div>;
 	} else {
 		return (
 			<div id="member-follows-page">

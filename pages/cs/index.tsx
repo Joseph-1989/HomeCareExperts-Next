@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import { Box, Stack } from '@mui/material';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Notice from '../../libs/components/cs/Notice';
 import Faq from '../../libs/components/cs/Faq';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -39,8 +39,8 @@ const CS: NextPage = () => {
 				<Stack className={'container'}>
 					<Box component={'div'} className={'cs-main-info'}>
 						<Box component={'div'} className={'info'}>
-							<span>Cs center</span>
-							<p>I will answer your questions</p>
+							<span>Customer Support Center</span>
+							<p>I am here to answer your questions</p>
 						</Box>
 						<Box component={'div'} className={'btns'}>
 							<div

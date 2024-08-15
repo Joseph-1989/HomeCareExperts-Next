@@ -1,6 +1,5 @@
 #pc-wrap {
 	#member-page {
-		background: #f6f6f6;
 		.container {
 			.member-page {
 				position: relative;
@@ -8,6 +7,7 @@
 				flex-direction: row;
 				gap: 25px;
 				padding-top: 96px;
+
 				.back-frame {
 					width: 1260px;
 					height: auto;
@@ -15,8 +15,8 @@
 					flex-direction: row;
 					margin: 100px 0 200px 0;
 					border-radius: 12px;
-					border: 1px solid #c4c4c4;
-					background: #fff;
+					border: 1px solid;
+					background: whitesmoke;
 					box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
 					.left-config {
 						position: relative;
@@ -24,7 +24,7 @@
 						width: 266px;
 						height: 700px;
 						border-radius: 12px;
-						background: #fff;
+						background: #bad7e9;
 						border: 1px solid rgba(196, 196, 196, 0.79);
 						box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
 						margin: 180px 20px 40px 20px;
@@ -185,6 +185,8 @@
 						margin-top: 52px;
 						align-items: center;
 						gap: 109px;
+						background-color: #bad7e9;
+						border-radius: 8px;
 						.list-config {
 							display: flex;
 							width: 100%;
@@ -192,6 +194,7 @@
 							flex-direction: row;
 							flex-wrap: wrap;
 							gap: 22px;
+							padding: 10px;
 						}
 					}
 				}

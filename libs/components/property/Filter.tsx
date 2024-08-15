@@ -12,12 +12,12 @@ import {
 	Tooltip,
 	IconButton,
 } from '@mui/material';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { PropertyLocation, PropertyType } from '../../enums/property.enum';
 import { PropertiesInquiry } from '../../types/property/property.input';
 import { useRouter } from 'next/router';
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { propertySquare } from '../../config';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import useDeviceDetect from '../../hooks/useDeviceDetect';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
 const MenuProps = {
@@ -192,7 +192,7 @@ const Filter = (props: FilterType) => {
 					);
 				}
 
-				if (searchFilter?.search?.typeList?.length == 0) {
+				if (searchFilter?.search?.locationList?.length == 0) {
 					alert('error');
 				}
 
@@ -308,6 +308,10 @@ const Filter = (props: FilterType) => {
 					);
 				}
 
+				if (searchFilter?.search?.roomsList?.length == 0) {
+					alert('error');
+				}
+
 				console.log('propertyRoomSelectHandler:', number);
 			} catch (err: any) {
 				console.log('ERROR, propertyRoomSelectHandler:', err);
@@ -351,6 +355,10 @@ const Filter = (props: FilterType) => {
 						})}`,
 						{ scroll: false },
 					);
+				}
+
+				if (searchFilter?.search?.options?.length == 0) {
+					alert('error');
 				}
 
 				console.log('propertyOptionSelectHandler:', e.target.value);
@@ -414,6 +422,10 @@ const Filter = (props: FilterType) => {
 						})}`,
 						{ scroll: false },
 					);
+				}
+
+				if (searchFilter?.search?.bedsList?.length == 0) {
+					alert('error');
 				}
 
 				console.log('propertyBedSelectHandler:', number);
@@ -764,7 +776,7 @@ const Filter = (props: FilterType) => {
 							onChange={propertyOptionSelectHandler}
 						/>
 						<label htmlFor={'Barter'} style={{ cursor: 'pointer' }}>
-							<Typography className="propert-type">Barter</Typography>
+							<Typography className="property-type">Barter</Typography>
 						</label>
 					</Stack>
 					<Stack className={'input-box'}>
@@ -778,7 +790,7 @@ const Filter = (props: FilterType) => {
 							onChange={propertyOptionSelectHandler}
 						/>
 						<label htmlFor={'Rent'} style={{ cursor: 'pointer' }}>
-							<Typography className="propert-type">Rent</Typography>
+							<Typography className="property-type">Rent</Typography>
 						</label>
 					</Stack>
 				</Stack>

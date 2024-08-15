@@ -17,14 +17,17 @@ export const SIGN_UP = gql`
 			memberImage
 			memberAddress
 			memberDesc
-			memberWarnings
-			memberBlocks
 			memberProperties
-			memberRank
 			memberArticles
+			memberFollowers
+			memberFollowings
 			memberPoints
 			memberLikes
 			memberViews
+			memberComments
+			memberRank
+			memberWarnings
+			memberBlocks
 			deletedAt
 			createdAt
 			updatedAt
@@ -46,13 +49,17 @@ export const LOGIN = gql`
 			memberImage
 			memberAddress
 			memberDesc
-			memberWarnings
-			memberBlocks
 			memberProperties
-			memberRank
+			memberArticles
+			memberFollowers
+			memberFollowings
 			memberPoints
 			memberLikes
 			memberViews
+			memberComments
+			memberRank
+			memberWarnings
+			memberBlocks
 			deletedAt
 			createdAt
 			updatedAt
@@ -75,17 +82,30 @@ export const UPDATE_MEMBER = gql`
 			memberAddress
 			memberDesc
 			memberProperties
-			memberRank
 			memberArticles
+			memberFollowers
+			memberFollowings
 			memberPoints
 			memberLikes
 			memberViews
+			memberComments
+			memberRank
 			memberWarnings
 			memberBlocks
 			deletedAt
 			createdAt
 			updatedAt
 			accessToken
+			meLiked {
+				memberId
+				likeRefId
+				myFavorite
+			}
+			meFollowed {
+				followingId
+				followerId
+				myFollowing
+			}
 		}
 	}
 `;
@@ -105,6 +125,7 @@ export const LIKE_TARGET_MEMBER = gql`
 			memberDesc
 			memberWarnings
 			memberBlocks
+			memberServices
 			memberProperties
 			memberRank
 			memberPoints
@@ -137,6 +158,8 @@ export const CREATE_PROPERTY = gql`
 			propertyRooms
 			propertyViews
 			propertyLikes
+			propertyComments
+			propertyRank
 			propertyImages
 			propertyDesc
 			propertyBarter
@@ -147,6 +170,48 @@ export const CREATE_PROPERTY = gql`
 			constructedAt
 			createdAt
 			updatedAt
+			meLiked {
+				memberId
+				likeRefId
+				myFavorite
+			}
+			memberData {
+				_id
+				memberType
+				memberStatus
+				memberAuthType
+				memberPhone
+				memberNick
+				memberFullName
+				memberImage
+				memberAddress
+				memberDesc
+				memberProperties
+				memberArticles
+				memberFollowers
+				memberFollowings
+				memberPoints
+				memberLikes
+				memberViews
+				memberComments
+				memberRank
+				memberWarnings
+				memberBlocks
+				deletedAt
+				createdAt
+				updatedAt
+				accessToken
+				meLiked {
+					memberId
+					likeRefId
+					myFavorite
+				}
+				meFollowed {
+					followingId
+					followerId
+					myFollowing
+				}
+			}
 		}
 	}
 `;
@@ -166,6 +231,8 @@ export const UPDATE_PROPERTY = gql`
 			propertyRooms
 			propertyViews
 			propertyLikes
+			propertyComments
+			propertyRank
 			propertyImages
 			propertyDesc
 			propertyBarter
@@ -176,6 +243,48 @@ export const UPDATE_PROPERTY = gql`
 			constructedAt
 			createdAt
 			updatedAt
+			meLiked {
+				memberId
+				likeRefId
+				myFavorite
+			}
+			memberData {
+				_id
+				memberType
+				memberStatus
+				memberAuthType
+				memberPhone
+				memberNick
+				memberFullName
+				memberImage
+				memberAddress
+				memberDesc
+				memberProperties
+				memberArticles
+				memberFollowers
+				memberFollowings
+				memberPoints
+				memberLikes
+				memberViews
+				memberComments
+				memberRank
+				memberWarnings
+				memberBlocks
+				deletedAt
+				createdAt
+				updatedAt
+				accessToken
+				meLiked {
+					memberId
+					likeRefId
+					myFavorite
+				}
+				meFollowed {
+					followingId
+					followerId
+					myFollowing
+				}
+			}
 		}
 	}
 `;
@@ -195,6 +304,8 @@ export const LIKE_TARGET_PROPERTY = gql`
 			propertyRooms
 			propertyViews
 			propertyLikes
+			propertyComments
+			propertyRank
 			propertyImages
 			propertyDesc
 			propertyBarter
@@ -205,9 +316,56 @@ export const LIKE_TARGET_PROPERTY = gql`
 			constructedAt
 			createdAt
 			updatedAt
+			meLiked {
+				memberId
+				likeRefId
+				myFavorite
+			}
+			memberData {
+				_id
+				memberType
+				memberStatus
+				memberAuthType
+				memberPhone
+				memberNick
+				memberFullName
+				memberImage
+				memberAddress
+				memberDesc
+				memberProperties
+				memberArticles
+				memberFollowers
+				memberFollowings
+				memberPoints
+				memberLikes
+				memberViews
+				memberComments
+				memberRank
+				memberWarnings
+				memberBlocks
+				deletedAt
+				createdAt
+				updatedAt
+				accessToken
+				meLiked {
+					memberId
+					likeRefId
+					myFavorite
+				}
+				meFollowed {
+					followingId
+					followerId
+					myFollowing
+				}
+			}
 		}
 	}
 `;
+
+/**************************
+ *       BOARD-COMMENT     *
+ *************************
+
 
 /**************************
  *      BOARD-ARTICLE     *
@@ -323,6 +481,193 @@ export const UNSUBSCRIBE = gql`
 			_id
 			followingId
 			followerId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+/**************************
+ *         SERVICE        *
+ *************************/
+
+export const CREATE_SERVICE = gql`
+	mutation CreateService($input: ServiceInput!) {
+		createService(input: $input) {
+			_id
+			serviceCategory
+			serviceStatus
+			serviceLocation
+			pricingModel
+			serviceAddress
+			serviceTitle
+			servicePrice
+			assistanceDIY
+			subscriptionModel
+			emergencyServices
+			referralPrograms
+			serviceViews
+			serviceLikes
+			serviceComments
+			serviceRank
+			serviceImages
+			serviceDescription
+			memberId
+			stoppedAt
+			deletedAt
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const UPDATE_SERVICE = gql`
+	mutation UpdateService($input: ServiceUpdateInput!) {
+		updateService(input: $input) {
+			_id
+			serviceCategory
+			serviceStatus
+			serviceLocation
+			pricingModel
+			serviceAddress
+			serviceTitle
+			servicePrice
+			assistanceDIY
+			subscriptionModel
+			emergencyServices
+			referralPrograms
+			serviceViews
+			serviceLikes
+			serviceComments
+			serviceRank
+			serviceImages
+			serviceDescription
+			memberId
+			stoppedAt
+			deletedAt
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const LIKE_TARGET_SERVICE = gql`
+	mutation LikeTargetService($input: String!) {
+		likeTargetService(serviceId: $input) {
+			_id
+			serviceCategory
+			serviceStatus
+			serviceLocation
+			pricingModel
+			serviceAddress
+			serviceTitle
+			servicePrice
+			assistanceDIY
+			subscriptionModel
+			emergencyServices
+			referralPrograms
+			serviceViews
+			serviceLikes
+			serviceComments
+			serviceRank
+			serviceImages
+			serviceDescription
+			memberId
+			stoppedAt
+			deletedAt
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+/**************************
+ *   NOTIFICATIONS        *
+ *************************/
+
+export const MARK_NOTIFICATIONS_AS_READ = gql`
+	mutation MarkNotificationsAsRead($userId: ObjectId!) {
+		markNotificationsAsRead(userId: $userId)
+	}
+`;
+
+/**************************
+ *         NOTICE        *
+ *************************/
+
+export const CREATE_NOTICE = gql`
+	mutation CreateNotice($input: NoticeInput!) {
+		createNotice(input: $input) {
+			_id
+			noticeCategory
+			noticeStatus
+			noticeTitle
+			noticeContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const UPDATE_NOTICE = gql`
+	mutation UpdateNotice($input: NoticeUpdate!) {
+		updateNotice(input: $input) {
+			_id
+			noticeCategory
+			noticeStatus
+			noticeTitle
+			noticeContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+/**************************
+ *             FAQ        *
+ *************************/
+
+export const CREATE_FAQ = gql`
+	mutation CreateFaq($input: FaqInput!) {
+		createFaq(input: $input) {
+			_id
+			faqCategory
+			faqStatus
+			faqTitle
+			faqContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const UPDATE_FAQ = gql`
+	mutation UpdateFaq($input: FaqUpdate!) {
+		updateFaq(input: $input) {
+			_id
+			faqCategory
+			faqStatus
+			faqTitle
+			faqContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const DELETE_FAQ = gql`
+	mutation DeleteFaq($id: String!) {
+		deleteFaq(id: $id) {
+			_id
+			faqCategory
+			faqStatus
+			faqTitle
+			faqContent
+			memberId
 			createdAt
 			updatedAt
 		}

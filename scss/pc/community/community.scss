@@ -1,31 +1,43 @@
 #pc-wrap {
 	#community-list-page {
 		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+
 		.container {
 			padding-top: 100px;
 			flex-direction: column;
 			gap: 64px;
+
 			.main-box {
 				flex-direction: row;
 				gap: 31px;
+				border: solid 2px #486a73;
+				border-radius: 12px;
+				padding: 40px;
+				background-color: #2f4858;
 				.left-config {
-					width: 266px;
-					height: fit-content;
+					width: 386px;
+					height: auto;
 					gap: 30px;
 					padding: 30px 15px 57px 21px;
-					margin-top: 100px;
-					margin-bottom: 50px;
 					border-radius: 12px;
-					border: 1px solid rgba(196, 196, 196, 0.79);
-					background: #fff;
-					box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+					border: 1px solid #312d2dc9;
+					box-shadow: 0px 1px 4px 0px #181a2012;
+					background-color: #c2d2bd;
+
 					.image-info {
 						width: 100%;
-						flex-direction: row;
-						gap: 11px;
+						display: flex;
+						flex-wrap: wrap;
+						align-items: center;
+						justify-content: center;
+
 						img {
-							width: 80px;
-							height: 80px;
+							width: 200px;
+							height: 200px;
 							border-radius: 50%;
 							object-fit: cover;
 						}
@@ -33,7 +45,7 @@
 							.name {
 								margin-top: 15px;
 								color: #181a20;
-								font-family: $font;
+								font-family: 'Times New Roman';
 								font-size: 15px;
 								font-style: normal;
 								font-weight: 600;
@@ -42,29 +54,29 @@
 						}
 					}
 					.tab-button {
-						width: 216.612px;
+						width: 316.612px;
 						height: 36px;
 						padding: 0;
 						justify-content: center;
 						align-items: center;
-						border-radius: 6px;
+						border-radius: 12px;
 						border: 1px solid #181a20;
 						margin-bottom: 10px;
 						color: #181a20;
-						font-family: $font;
 						font-size: 14px;
 						font-style: normal;
-						font-weight: 500;
+						font-weight: 600;
 						line-height: 150%;
 						letter-spacing: -0.266px;
+						font-family: 'Times New Roman';
 					}
 					.tab-button.active {
-						width: 216.612px;
+						width: 316.612px;
 						height: 36px;
 						padding: 0;
 						justify-content: center;
 						align-items: center;
-						background-color: #000000;
+						background-color: #48822b;
 						color: #ffffff;
 						border-radius: 6px;
 						margin-bottom: 10px;
@@ -77,11 +89,14 @@
 					}
 				}
 				.right-config {
-					width: 100%;
-					height: auto;
+					background-color: #c2d2bd;
+					border-radius: 12px;
+					border: 2px solid;
+					padding: 20px;
 					.panel-config {
 						width: 100%;
 						height: auto;
+
 						.title-box {
 							width: 100%;
 							height: auto;
@@ -89,6 +104,7 @@
 							justify-content: space-between;
 							align-items: center;
 							margin-bottom: 45px;
+
 							.left {
 								width: 60%;
 								height: auto;
@@ -112,11 +128,11 @@
 								}
 							}
 							.right {
-								width: 91px;
-								height: 32px;
-								border-radius: 4px;
-								background: #eb6753;
-								color: #fff;
+								width: 191px;
+								height: 52px;
+								border-radius: 8px;
+								background: #2f4858;
+								color: beige;
 								font-family: $font;
 								font-size: 13px;
 								font-style: normal;

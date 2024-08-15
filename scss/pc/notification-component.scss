@@ -1,0 +1,176 @@
+// Define color variables for reuse
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+$text-color: #333;
+$background-color: #f9f9f9;
+
+.notification-wrapper {
+	position: relative;
+}
+
+.notification-bell {
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 24px; // Adjust as needed
+}
+
+.notification-container {
+	position: absolute;
+	top: 50px; // Adjust based on the layout
+	right: 0;
+	background-color: white;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	width: auto;
+	z-index: 1000;
+	overflow: hidden;
+}
+
+.notification-header {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 20px;
+	border-bottom: 1px solid #ddd;
+}
+
+.close-button {
+	background: none;
+	border: none;
+	font-size: 20px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	padding: 0 5px;
+	background: #9fd1f0;
+	width: auto;
+	border: solid 1px #b9b4b4;
+	border-radius: 4px;
+	margin: 0 0 10px 0;
+
+	&:hover {
+		background-color: #f0f0f0; // Change background on hover
+	}
+
+	&:focus {
+		outline: none; // Remove the default outline
+		box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); // Add custom focus outline
+	}
+}
+
+h1 {
+	color: $primary-color;
+	font-size: 24px;
+	margin-bottom: 16px;
+}
+
+ul {
+	width: auto;
+	height: auto;
+	list-style: none;
+	padding: 0;
+}
+
+.notification-item {
+	cursor: pointer;
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+	&:last-child {
+		border-bottom: none;
+	}
+}
+
+.notification-item.read {
+	background-color: #f0f0f0; /* Light gray background for read notifications */
+}
+
+.notification-item.wait {
+	background-color: #fff; /* White background for unread notifications */
+}
+
+li {
+	width: auto;
+	height: auto;
+	padding: 12px 16px;
+	margin-bottom: 10px;
+	background-color: white;
+	border-radius: 8px;
+	border: 1px solid #ddd;
+	transition: transform 0.2s ease-in-out;
+
+	&:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+}
+
+h2 {
+	width: 300px;
+	height: auto;
+	margin: 0;
+	font-size: 20px;
+	color: $primary-color;
+	cursor: pointer;
+}
+
+p {
+	margin: 8px 0;
+	color: $text-color;
+}
+
+small {
+	color: #666;
+}
+
+.popover-content {
+	padding: 16px;
+	max-width: 300px;
+	background-color: white;
+	border-radius: 8px;
+	border: 1px solid #ddd;
+	box-shadow: 0 4px 8px #0000001a;
+	color: $text-color;
+
+	h2 {
+		font-size: 18px;
+		margin-bottom: 8px;
+		color: $primary-color;
+	}
+
+	p {
+		margin-bottom: 8px;
+	}
+
+	strong {
+		color: $secondary-color;
+	}
+
+	.popover-close-button {
+		background-color: transparent; // Make background transparent
+		border: none; // Remove default button border
+		color: #333; // Set the text color
+		font-size: 14px; // Set font size
+		font-weight: bold; // Set font weight
+		padding: 8px 12px; // Add padding for a clickable area
+		cursor: pointer; // Change cursor to pointer on hover
+		border-radius: 4px; // Slightly round the corners for a modern look
+		gap: 5px;
+		display: flex;
+		align-items: center;
+
+		&:hover {
+			background-color: #f0f0f0; // Change background on hover
+		}
+
+		&:focus {
+			outline: none; // Remove the default outline
+			box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); // Add custom focus outline
+		}
+	}
+}

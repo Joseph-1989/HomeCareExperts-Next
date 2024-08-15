@@ -1,16 +1,16 @@
 import React from 'react';
+import { REACT_APP_API_URL, topPropertyRank } from '../../config';
 import { Stack, Typography, Box } from '@mui/material';
+import { useReactiveVar } from '@apollo/client';
+import { formatterStr } from '../../utils';
+import { Property } from '../../types/property/property';
+import { userVar } from '../../../apollo/store';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Property } from '../../types/property/property';
-import Link from 'next/link';
-import { formatterStr } from '../../utils';
-import { REACT_APP_API_URL, topPropertyRank } from '../../config';
-import { useReactiveVar } from '@apollo/client';
-import { userVar } from '../../../apollo/store';
 import IconButton from '@mui/material/IconButton';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import Link from 'next/link';
 
 interface PropertyCardType {
 	property: Property;

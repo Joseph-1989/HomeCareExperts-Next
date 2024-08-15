@@ -1,17 +1,32 @@
+// Core Libraries
 import React, { useState } from 'react';
+
+// Third-Party Libraries
 import { Stack, Box } from '@mui/material';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper';
+import { useQuery } from '@apollo/client';
+
+// Icons
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
-import PopularPropertyCard from './PopularPropertyCard';
-import { Property } from '../../types/property/property';
+
+// Next.js Specific
 import Link from 'next/link';
+
+// Custom Components
+import PopularPropertyCard from './PopularPropertyCard';
+
+// Hooks
+import useDeviceDetect from '../../hooks/useDeviceDetect';
+
+// Types
+import { Property } from '../../types/property/property';
 import { PropertiesInquiry } from '../../types/property/property.input';
+import { T } from '../../types/common'; // Generic Type (if applicable)
+
+// GraphQL Queries
 import { GET_PROPERTIES } from '../../../apollo/user/query';
-import { useQuery } from '@apollo/client';
-import { T } from '../../types/common';
 
 interface PopularPropertiesProps {
 	initialInput: PropertiesInquiry;

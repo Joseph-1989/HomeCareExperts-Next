@@ -18,11 +18,15 @@ export const UPDATE_MEMBER_BY_ADMIN = gql`
 			memberAddress
 			memberDesc
 			memberProperties
-			memberRank
+			memberServices
 			memberArticles
+			memberFollowers
+			memberFollowings
 			memberPoints
 			memberLikes
 			memberViews
+			memberComments
+			memberRank
 			memberWarnings
 			memberBlocks
 			deletedAt
@@ -96,6 +100,70 @@ export const REMOVE_PROPERTY_BY_ADMIN = gql`
 `;
 
 /**************************
+ *        SERVICE        *
+ *************************/
+
+export const UPDATE_SERVICE_BY_ADMIN = gql`
+	mutation UpdateServiceByAdmin($input: ServiceUpdateInput!) {
+		updateServiceByAdmin(input: $input) {
+			_id
+			serviceCategory
+			serviceStatus
+			serviceLocation
+			pricingModel
+			serviceAddress
+			serviceTitle
+			servicePrice
+			assistanceDIY
+			subscriptionModel
+			emergencyServices
+			referralPrograms
+			serviceViews
+			serviceLikes
+			serviceComments
+			serviceRank
+			serviceImages
+			serviceDescription
+			memberId
+			stoppedAt
+			deletedAt
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const REMOVE_SERVICE_BY_ADMIN = gql`
+	mutation RemoveServiceByAdmin($input: String!) {
+		removeServiceByAdmin(serviceId: $input) {
+			_id
+			serviceCategory
+			serviceStatus
+			serviceLocation
+			pricingModel
+			serviceAddress
+			serviceTitle
+			servicePrice
+			assistanceDIY
+			subscriptionModel
+			emergencyServices
+			referralPrograms
+			serviceViews
+			serviceLikes
+			serviceComments
+			serviceRank
+			serviceImages
+			serviceDescription
+			memberId
+			stoppedAt
+			deletedAt
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+/**************************
  *      BOARD-ARTICLE     *
  *************************/
 
@@ -150,6 +218,132 @@ export const REMOVE_COMMENT_BY_ADMIN = gql`
 			memberId
 			createdAt
 			updatedAt
+		}
+	}
+`;
+
+/**************************
+ *         NOTICE        *
+ *************************/
+
+export const CREATE_NOTICE = gql`
+	mutation CreateNotice($input: NoticeInput!) {
+		createNotice(input: $input) {
+			_id
+			noticeCategory
+			noticeStatus
+			noticeTitle
+			noticeContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const UPDATE_NOTICE = gql`
+	mutation UpdateNotice($input: NoticeUpdate!) {
+		updateNotice(input: $input) {
+			_id
+			noticeCategory
+			noticeStatus
+			noticeTitle
+			noticeContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const DELETE_NOTICE = gql`
+	mutation DeleteNotice($id: String!) {
+		deleteNotice(id: $id) {
+			_id
+			noticeCategory
+			noticeStatus
+			noticeTitle
+			noticeContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+/**************************
+ *             FAQ        *
+ *************************/
+
+export const CREATE_FAQ = gql`
+	mutation CreateFaq($input: FaqInput!) {
+		createFaq(input: $input) {
+			_id
+			faqCategory
+			faqStatus
+			faqTitle
+			faqContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const UPDATE_FAQ = gql`
+	mutation UpdateFaq($input: FaqUpdate!) {
+		updateFaq(input: $input) {
+			_id
+			faqCategory
+			faqStatus
+			faqTitle
+			faqContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const DELETE_FAQ = gql`
+	mutation DeleteFaq($id: String!) {
+		deleteFaq(id: $id) {
+			_id
+			faqCategory
+			faqStatus
+			faqTitle
+			faqContent
+			memberId
+			createdAt
+			updatedAt
+			memberData {
+				_id
+				memberType
+				memberStatus
+				memberAuthType
+				memberPhone
+				memberNick
+				memberFullName
+				memberImage
+				memberAddress
+				memberDesc
+				memberProperties
+				memberServices
+				memberArticles
+				memberFollowers
+				memberFollowings
+				memberPoints
+				memberLikes
+				memberViews
+				memberComments
+				memberRank
+				memberWarnings
+				memberBlocks
+				deletedAt
+				createdAt
+				updatedAt
+				accessToken
+			}
 		}
 	}
 `;

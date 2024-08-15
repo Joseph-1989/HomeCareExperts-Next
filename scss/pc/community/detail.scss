@@ -1,31 +1,45 @@
 #pc-wrap {
 	#community-detail-page {
 		position: relative;
-		padding-bottom: 135px;
+		background-color: #c2d2bd;
 		.container {
-			padding-top: 100px;
+			width: auto;
+			justify-content: center;
 			flex-direction: column;
+			align-items: center;
+			padding: 100px 0;
+			display: flex;
+			width: auto;
 			gap: 64px;
+
 			.main-box {
+				width: auto;
 				flex-direction: row;
 				gap: 31px;
+				border-radius: 12px;
+				padding: 70px;
+				background-color: white;
 				.left-config {
-					width: 266px;
+					width: 386px;
 					height: fit-content;
+					align-items: center;
 					gap: 30px;
 					padding: 30px 15px 57px 21px;
 					margin-top: 100px;
+					margin-bottom: 50px;
 					border-radius: 12px;
 					border: 1px solid rgba(196, 196, 196, 0.79);
-					background: #fff;
 					box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+					background-color: #c2d2bd;
 					.image-info {
 						width: 100%;
-						flex-direction: row;
-						gap: 11px;
+						display: flex;
+						flex-wrap: wrap;
+						align-items: center;
+						justify-content: center;
 						img {
-							width: 80px;
-							height: 80px;
+							width: 200px;
+							height: 200px;
 							border-radius: 50%;
 							object-fit: cover;
 						}
@@ -33,7 +47,7 @@
 							.name {
 								margin-top: 15px;
 								color: #181a20;
-								font-family: $font;
+								font-family: 'Times New Roman';
 								font-size: 15px;
 								font-style: normal;
 								font-weight: 600;
@@ -42,29 +56,29 @@
 						}
 					}
 					.tab-button {
-						width: 216.612px;
+						width: 316.612px;
 						height: 36px;
 						padding: 0;
 						justify-content: center;
 						align-items: center;
-						border-radius: 6px;
+						border-radius: 12px;
 						border: 1px solid #181a20;
 						margin-bottom: 10px;
 						color: #181a20;
-						font-family: $font;
 						font-size: 14px;
 						font-style: normal;
-						font-weight: 500;
+						font-weight: 600;
 						line-height: 150%;
 						letter-spacing: -0.266px;
+						font-family: 'Times New Roman';
 					}
 					.tab-button.active {
-						width: 216.612px;
+						width: 316.612px;
 						height: 36px;
 						padding: 0;
 						justify-content: center;
 						align-items: center;
-						background-color: #000000;
+						background-color: #48822b;
 						color: #ffffff;
 						border-radius: 6px;
 						margin-bottom: 10px;
@@ -77,13 +91,18 @@
 					}
 				}
 				.community-detail-config {
+					padding: 70px;
+					align-items: center;
+					border-radius: 12px;
+					border: solid 1px black;
 					.title-box {
-						width: 100%;
-						height: auto;
-						flex-direction: row;
 						justify-content: space-between;
+						flex-direction: row;
 						align-items: center;
 						margin-bottom: 45px;
+						height: auto;
+						width: 100%;
+
 						.left {
 							width: 60%;
 							height: auto;
@@ -107,11 +126,11 @@
 							}
 						}
 						.right {
-							width: 91px;
-							height: 32px;
-							border-radius: 4px;
-							background: #eb6753;
-							color: #fff;
+							width: 191px;
+							height: 42px;
+							border-radius: 8px;
+							background: #2f4858;
+							color: beige;
 							font-family: $font;
 							font-size: 13px;
 							font-style: normal;
@@ -121,19 +140,31 @@
 						}
 					}
 					.config {
+						padding: 70px;
+						width: auto;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: center;
+						border-radius: 12px;
+						gap: 21px;
+
 						.first-box-config {
 							width: 1012px;
-							min-height: 500px;
-							border-radius: 8px 8px 0px 0px;
-							border: 1px solid #eee;
+							height: auto;
+							padding: 25px 50px;
+							border-radius: 12px;
 							box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+							background-color: whitesmoke;
 							.content-and-info {
 								width: 100%;
 								height: 126px;
-								padding: 35px 25px;
+								padding: 25px 25px;
 								flex-direction: row;
 								justify-content: space-between;
-								border-bottom: 1px solid #eee;
+								border-radius: 12px;
+								background-color: white;
+
 								.content {
 									gap: 12px;
 									.content-data {
@@ -151,16 +182,17 @@
 										align-items: center;
 										gap: 5px;
 										.member-img {
-											width: 30.023px;
-											height: 30px;
+											width: 45px;
+											height: 45px;
 											cursor: pointer;
+											object-fit: cover;
 										}
 										.member-nick {
 											color: #000;
 											font-family: $font;
 											font-size: 13px;
 											font-style: normal;
-											font-weight: 400;
+											font-weight: 500;
 											line-height: normal;
 											letter-spacing: 0.13px;
 											cursor: pointer;
@@ -168,14 +200,14 @@
 										.divider {
 											width: 1px;
 											height: 16px;
-											background: #eee;
+											background: black;
 										}
 										.time-added {
-											color: #bdbdbd;
+											color: #181a20;
 											font-family: $font;
 											font-size: 12px;
 											font-style: normal;
-											font-weight: 400;
+											font-weight: 500;
 											line-height: normal;
 											letter-spacing: 0.12px;
 										}
@@ -184,9 +216,11 @@
 								.info {
 									width: auto;
 									height: auto;
-									gap: 15px;
-									flex-direction: row;
-									align-items: flex-end;
+									display: flex;
+									gap: 5px;
+									align-items: center;
+									justify-content: center space-evenly;
+
 									.icon-info {
 										flex-direction: row;
 										align-items: center;
@@ -229,12 +263,12 @@
 									justify-content: center;
 									gap: 17px;
 									button {
-										width: 105.081px;
-										height: 45px;
+										width: 135.081px;
+										height: 55px;
 										gap: 5px;
-										border-radius: 2px;
+										border-radius: 12px;
 										border: 1px solid #eee;
-										background: #eb6753;
+										background: #abd6a6;
 										p {
 											color: #fff;
 											font-family: $font;
@@ -249,10 +283,13 @@
 							}
 						}
 						.second-box-config {
+							max-width: 0 50px;
 							width: 1012px;
 							height: auto;
 							padding: 30px 24px;
 							gap: 11px;
+							border-radius: 12px;
+							background-color: whitesmoke;
 							.title-text {
 								align-self: flex-start;
 								color: #000;
@@ -260,12 +297,13 @@
 								font-family: $font;
 								font-size: 17px;
 								font-style: normal;
-								font-weight: 700;
+								font-weight: 600;
 								line-height: normal;
 								letter-spacing: -0.34px;
 							}
 							.leave-comment {
 								input {
+									border-radius: 12px;
 									width: 100%;
 									height: 61px;
 									outline: none;
@@ -283,32 +321,35 @@
 								}
 								.button-box {
 									width: 100%;
-									height: 42px;
+									height: 62px;
+									border-radius: 12px;
 									flex-direction: row;
 									justify-content: space-between;
 									align-items: center;
-									padding-left: 17px;
+									padding: 0 25px;
 									border: 1px solid #eee;
 									border-top: none;
+									background-color: white;
+
 									p {
 										color: #000;
 										font-family: $font;
 										font-size: 14px;
 										font-style: normal;
-										font-weight: 400;
+										font-weight: 500;
 										line-height: normal;
 										letter-spacing: 0.56px;
 									}
 									button {
-										width: 100.077px;
-										height: 100%;
-										border-radius: 0;
-										background: #eb6753;
+										width: 150.077px;
+										height: 75%;
+										border-radius: 12px;
+										background: #9dcd9d;
 										color: #fff;
 										font-family: $font;
 										font-size: 14px;
 										font-style: normal;
-										font-weight: 400;
+										font-weight: 600;
 										line-height: normal;
 										letter-spacing: 0.56px;
 									}

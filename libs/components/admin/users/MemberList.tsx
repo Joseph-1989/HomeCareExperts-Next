@@ -163,23 +163,18 @@ export const MemberPanelList = (props: MemberPanelListType) => {
 								return (
 									<TableRow hover key={member?._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
 										<TableCell align="left">{member._id}</TableCell>
-
 										<TableCell align="left" className={'name'}>
-											<Stack direction={'row'}>
-												<Link href={`/member?memberId=${member._id}`}>
-													<div>
-														<Avatar alt="Remy Sharp" src={member_image} sx={{ ml: '2px', mr: '10px' }} />
-													</div>
-												</Link>
-												<Link href={`/member?memberId=${member._id}`}>
-													<div>{member.memberNick}</div>
-												</Link>
-											</Stack>
+											<Link href={`/member?memberId=${member._id}`}>
+												<div>
+													<Avatar alt="Remy Sharp" src={member_image} sx={{ ml: '2px', mr: '10px' }} />
+												</div>
+											</Link>
+											<Link href={`/member?memberId=${member._id}`}>
+												<div>{member.memberNick}</div>
+											</Link>
 										</TableCell>
-
 										<TableCell align="center">{member.memberFullName ?? '-'}</TableCell>
 										<TableCell align="left">{member.memberPhone}</TableCell>
-
 										<TableCell align="center">
 											<Button onClick={(e: any) => menuIconClickHandler(e, index)} className={'badge success'}>
 												{member.memberType}

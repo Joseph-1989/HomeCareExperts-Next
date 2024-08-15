@@ -1,36 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
-import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import { Button, Stack, Typography, Tab, Tabs, IconButton, Backdrop, Pagination } from '@mui/material';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
-import Moment from 'react-moment';
-import { userVar } from '../../apollo/store';
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import ChatIcon from '@mui/icons-material/Chat';
-import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
-import { CommentInput, CommentsInquiry } from '../../libs/types/comment/comment.input';
-import { Comment } from '../../libs/types/comment/comment';
-import dynamic from 'next/dynamic';
-import { CommentGroup, CommentStatus } from '../../libs/enums/comment.enum';
-import { T } from '../../libs/types/common';
-import EditIcon from '@mui/icons-material/Edit';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { BoardArticle } from '../../libs/types/board-article/board-article';
-import { GET_BOARD_ARTICLE, GET_COMMENTS } from '../../apollo/user/query';
 import { CREATE_COMMENT, LIKE_TARGET_BOARD_ARTICLE, UPDATE_COMMENT } from '../../apollo/user/mutation';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
+import { GET_BOARD_ARTICLE, GET_COMMENTS } from '../../apollo/user/query';
+import { CommentInput, CommentsInquiry } from '../../libs/types/comment/comment.input';
+import { CommentGroup, CommentStatus } from '../../libs/enums/comment.enum';
+import React, { useEffect, useState } from 'react';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { CommentUpdate } from '../../libs/types/comment/comment.update';
+import { BoardArticle } from '../../libs/types/board-article/board-article';
+import { useRouter } from 'next/router';
 import { Messages } from '../../libs/config';
+import { NextPage } from 'next';
+import { userVar } from '../../apollo/store';
+import { Comment } from '../../libs/types/comment/comment';
+import { T } from '../../libs/types/common';
 import {
 	sweetConfirmAlert,
 	sweetMixinErrorAlert,
 	sweetMixinSuccessAlert,
 	sweetTopSmallSuccessAlert,
 } from '../../libs/sweetAlert';
-import { CommentUpdate } from '../../libs/types/comment/comment.update';
+import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
+import { FaThumbsUp } from 'react-icons/fa';
+import { FaRegThumbsUp } from 'react-icons/fa';
+import { FaEye } from 'react-icons/fa6';
+import { LiaSmsSolid } from 'react-icons/lia';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
+import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import ChatIcon from '@mui/icons-material/Chat';
+import EditIcon from '@mui/icons-material/Edit';
+import dynamic from 'next/dynamic';
+import Moment from 'react-moment';
+import { BoardArticleCategory } from '../../libs/enums/board-article.enum';
+import { BoardArticlesInquiry } from '../../libs/types/board-article/board-article.input';
 const ToastViewerComponent = dynamic(() => import('../../libs/components/community/TViewer'), { ssr: false });
 
 export const getStaticProps = async ({ locale }: any) => ({
@@ -46,7 +49,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 
 	const articleId = query?.id as string;
 	const articleCategory = query?.articleCategory as string;
-
+	const [searchCommunity, setSearchCommunity] = useState<BoardArticlesInquiry>(initialInput);
 	const [comment, setComment] = useState<string>('');
 	const [wordsCnt, setWordsCnt] = useState<number>(0);
 	const [updatedCommentWordsCnt, setUpdatedCommentWordsCnt] = useState<number>(0);
@@ -220,7 +223,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 	};
 
 	const goMemberPage = (id: any) => {
-		if (id === user?._id) router.push('/mypage');
+		if (id === user?._id) router.push('/userpage');
 		else router.push(`/member?memberId=${id}`);
 	};
 
@@ -241,19 +244,20 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>COMMUNITY DETAIL PAGE MOBILE</div>;
-	} else {
 		return (
 			<div id="community-detail-page">
 				<div className="container">
 					<Stack className="main-box">
+						{/* ____________________________________________________________________________________________________________________________________________ */}
+
 						<Stack className="left-config">
 							<Stack className={'image-info'}>
-								<img src={'/img/logo/logoText.svg'} />
+								<img src={'/img/logo/logoHomeCareServices.png'} />
 								<Stack className={'community-name'}>
-									<Typography className={'name'}>Community Board Article</Typography>
+									<Typography className={'name'}>HomeCareServices Community</Typography>
 								</Stack>
 							</Stack>
+
 							<Tabs
 								orientation="vertical"
 								aria-label="lab API tabs example"
@@ -263,28 +267,21 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 								onChange={tabChangeHandler}
 								value={articleCategory}
 							>
-								<Tab
-									value={'FREE'}
-									label={'Free Board'}
-									className={`tab-button ${articleCategory === 'FREE' ? 'active' : ''}`}
-								/>
-								<Tab
-									value={'RECOMMEND'}
-									label={'Recommendation'}
-									className={`tab-button ${articleCategory === 'RECOMMEND' ? 'active' : ''}`}
-								/>
-								<Tab
-									value={'NEWS'}
-									label={'News'}
-									className={`tab-button ${articleCategory === 'NEWS' ? 'active' : ''}`}
-								/>
-								<Tab
-									value={'HUMOR'}
-									label={'Humor'}
-									className={`tab-button ${articleCategory === 'HUMOR' ? 'active' : ''}`}
-								/>
+								{Object.values(BoardArticleCategory).map((category) => (
+									<Tab
+										key={category}
+										value={category}
+										label={category
+											.replace(/_/g, ' ')
+											.replace(/\w\S*/g, (word) => word.charAt(0).toUpperCase() + word.substring(1).toLowerCase())}
+										className={`tab-button ${articleCategory === category ? 'active' : ''}`}
+									/>
+								))}
 							</Tabs>
 						</Stack>
+
+						{/* ____________________________________________________________________________________________________________________________________________ */}
+
 						<div className="community-detail-config">
 							<Stack className="title-box">
 								<Stack className="left">
@@ -296,7 +293,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 								<Button
 									onClick={() =>
 										router.push({
-											pathname: '/mypage',
+											pathname: '/userpage',
 											query: {
 												category: 'writeArticle',
 											},
@@ -307,9 +304,14 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 									Write
 								</Button>
 							</Stack>
+
+							{/* ____________________________________________________________________________________________________________________________________________ */}
+
 							<div className="config">
 								<Stack className="first-box-config">
 									<Stack className="content-and-info">
+										{/* ____________________________________________________________________________________________________________________________________________ */}
+
 										<Stack className="content">
 											<Typography className="content-data">{boardArticle?.articleTitle}</Typography>
 											<Stack className="member-info">
@@ -328,19 +330,22 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 												</Moment>
 											</Stack>
 										</Stack>
+
+										{/* ____________________________________________________________________________________________________________________________________________ */}
+
 										<Stack className="info">
 											<Stack className=" icon-info">
 												{boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite ? (
-													<ThumbUpAltIcon onClick={() => likeBoArticleHandler(user, boardArticle?._id)} />
+													<FaThumbsUp onClick={() => likeBoArticleHandler(user, boardArticle?._id)} />
 												) : (
-													<ThumbUpOffAltIcon onClick={() => likeBoArticleHandler(user, boardArticle?._id)} />
+													<FaThumbsUp onClick={() => likeBoArticleHandler(user, boardArticle?._id)} />
 												)}
 
 												<Typography className="text">{boardArticle?.articleLikes}</Typography>
 											</Stack>
 											<Stack className="divider"></Stack>
 											<Stack className="icon-info">
-												<VisibilityIcon />
+												<FaEye />
 												<Typography className="text">{boardArticle?.articleViews}</Typography>
 											</Stack>
 											<Stack className="divider"></Stack>
@@ -350,6 +355,8 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 												<Typography className="text">{total}</Typography>
 											</Stack>
 										</Stack>
+
+										{/* ____________________________________________________________________________________________________________________________________________ */}
 									</Stack>
 									<Stack>
 										<ToastViewerComponent markdown={boardArticle?.articleContent} className={'ytb_play'} />
@@ -358,15 +365,18 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 										<Stack className="top">
 											<Button>
 												{boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite ? (
-													<ThumbUpAltIcon onClick={() => likeBoArticleHandler(user, boardArticle?._id)} />
+													<FaRegThumbsUp onClick={() => likeBoArticleHandler(user, boardArticle?._id)} />
 												) : (
-													<ThumbUpOffAltIcon onClick={() => likeBoArticleHandler(user, boardArticle?._id)} />
+													<FaThumbsUp onClick={() => likeBoArticleHandler(user, boardArticle?._id)} />
 												)}
 												<Typography className="text">{boardArticle?.articleLikes}</Typography>
 											</Button>
 										</Stack>
 									</Stack>
 								</Stack>
+
+								{/* ____________________________________________________________________________________________________________________________________________ */}
+
 								<Stack
 									className="second-box-config"
 									sx={{ borderBottom: total > 0 ? 'none' : '1px solid #eee', border: '1px solid #eee' }}
@@ -389,11 +399,17 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 										</Stack>
 									</Stack>
 								</Stack>
+
+								{/* ____________________________________________________________________________________________________________________________________________ */}
+
 								{total > 0 && (
 									<Stack className="comments">
 										<Typography className="comments-title">Comments</Typography>
 									</Stack>
 								)}
+
+								{/* ____________________________________________________________________________________________________________________________________________ */}
+
 								{comments?.map((commentData, index) => {
 									return (
 										<Stack className="comments-box" key={commentData?._id}>
@@ -509,6 +525,9 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 										</Stack>
 									);
 								})}
+
+								{/* ____________________________________________________________________________________________________________________________________________ */}
+
 								{total > 0 && (
 									<Stack className="pagination-box">
 										<Pagination
@@ -522,6 +541,314 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 								)}
 							</div>
 						</div>
+					</Stack>
+				</div>
+			</div>
+		);
+	} else {
+		return (
+			<div id="community-detail-page">
+				<div className="container">
+					<Stack className="main-box">
+						{/* ____________________________________________________________________________________________________________________________________________ */}
+
+						<div className="community-detail-config">
+							<Stack className="title-box">
+								<Stack className="left">
+									<Typography className="title">
+										{articleCategory ? articleCategory.replace(/_/g, ' ') : 'UNKNOWN'} BOARD
+									</Typography>
+									<Typography className="sub-title">
+										This is a space where you can share your thoughts, ideas, and opinions freely without any
+										restrictions.
+									</Typography>
+								</Stack>
+								<Button
+									onClick={() =>
+										router.push({
+											pathname: '/userpage',
+											query: {
+												category: 'writeArticle',
+											},
+										})
+									}
+									className="right"
+								>
+									Share your thoughts
+								</Button>
+							</Stack>
+
+							{/* ____________________________________________________________________________________________________________________________________________ */}
+
+							<div className="config">
+								<Stack className="first-box-config">
+									<Stack className="content-and-info">
+										{/* ____________________________________________________________________________________________________________________________________________ */}
+
+										<Stack className="content">
+											<Typography className="content-data">{boardArticle?.articleTitle}</Typography>
+											<Stack className="member-info">
+												<img
+													src={memberImage}
+													alt=""
+													className="member-img"
+													onClick={() => goMemberPage(boardArticle?.memberData?._id)}
+												/>
+												<Typography className="member-nick" onClick={() => goMemberPage(boardArticle?.memberData?._id)}>
+													{boardArticle?.memberData?.memberNick}
+												</Typography>
+												<Stack className="divider"></Stack>
+												<Moment className={'time-added'} format={'DD.MM.YY HH:mm'}>
+													{boardArticle?.createdAt}
+												</Moment>
+											</Stack>
+										</Stack>
+
+										{/* ____________________________________________________________________________________________________________________________________________ */}
+
+										<Stack className="info">
+											<Stack className=" icon-info">
+												{boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite ? (
+													<FaRegThumbsUp size={24} onClick={() => likeBoArticleHandler(user, boardArticle?._id)} />
+												) : (
+													<FaThumbsUp size={24} onClick={() => likeBoArticleHandler(user, boardArticle?._id)} />
+												)}
+
+												<Typography className="text">{boardArticle?.articleLikes}</Typography>
+											</Stack>
+											<Stack className="divider"></Stack>
+											<Stack className="icon-info">
+												<FaEye size={24} />
+												<Typography className="text">{boardArticle?.articleViews}</Typography>
+											</Stack>
+											<Stack className="divider"></Stack>
+											<Stack className="icon-info">
+												{total > 0 ? <LiaSmsSolid size={24} /> : <ChatIcon size={24} />}
+
+												<Typography className="text">{total}</Typography>
+											</Stack>
+										</Stack>
+
+										{/* ____________________________________________________________________________________________________________________________________________ */}
+									</Stack>
+									<Stack>
+										<ToastViewerComponent markdown={boardArticle?.articleContent} className={'ytb_play'} />
+									</Stack>
+									<Stack className="like-and-dislike">
+										<Stack className="top">
+											<Button>
+												{boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite ? (
+													<FaRegThumbsUp size={24} onClick={() => likeBoArticleHandler(user, boardArticle?._id)} />
+												) : (
+													<FaThumbsUp size={24} onClick={() => likeBoArticleHandler(user, boardArticle?._id)} />
+												)}
+												<Typography className="text">{boardArticle?.articleLikes}</Typography>
+											</Button>
+										</Stack>
+									</Stack>
+								</Stack>
+
+								{/* ____________________________________________________________________________________________________________________________________________ */}
+
+								<Stack
+									className="second-box-config"
+									sx={{ borderBottom: total > 0 ? 'none' : '1px solid #eee', border: '1px solid #eee' }}
+								>
+									<Typography className="title-text">Comments ({total})</Typography>
+									<Stack className="leave-comment">
+										<input
+											type="text"
+											placeholder="Leave a comment"
+											value={comment}
+											onChange={(e) => {
+												if (e.target.value.length > 100) return;
+												setWordsCnt(e.target.value.length);
+												setComment(e.target.value);
+											}}
+										/>
+										<Stack className="button-box">
+											<Typography>{wordsCnt}/100</Typography>
+											<Button onClick={createCommentHandler}>comment</Button>
+										</Stack>
+									</Stack>
+								</Stack>
+
+								{/* ____________________________________________________________________________________________________________________________________________ */}
+
+								{total > 0 && (
+									<Stack className="comments">
+										<Typography className="comments-title">Comments</Typography>
+									</Stack>
+								)}
+								{comments?.map((commentData, index) => {
+									return (
+										<Stack className="comments-box" key={commentData?._id}>
+											<Stack className="main-comment">
+												<Stack className="member-info">
+													{/* ____________________________________________________________________________________________________________________________________________ */}
+
+													<Stack
+														className="name-date"
+														onClick={() => goMemberPage(commentData?.memberData?._id as string)}
+													>
+														<img src={getCommentMemberImage(commentData?.memberData?.memberImage)} alt="" />
+														<Stack className="name-date-column">
+															<Typography className="name">{commentData?.memberData?.memberNick}</Typography>
+															<Typography className="date">
+																<Moment className={'time-added'} format={'DD.MM.YY HH:mm'}>
+																	{commentData?.createdAt}
+																</Moment>
+															</Typography>
+														</Stack>
+													</Stack>
+
+													{/* ____________________________________________________________________________________________________________________________________________ */}
+
+													{commentData?.memberId === user?._id && (
+														<Stack className="buttons">
+															<IconButton
+																onClick={() => {
+																	setUpdatedCommentId(commentData?._id);
+																	updateButtonHandler(commentData?._id, CommentStatus.DELETE);
+																}}
+															>
+																<DeleteForeverIcon sx={{ color: '#757575', cursor: 'pointer' }} />
+															</IconButton>
+															<IconButton
+																onClick={(e: any) => {
+																	setUpdatedComment(commentData?.commentContent);
+																	setUpdatedCommentWordsCnt(commentData?.commentContent?.length);
+																	setUpdatedCommentId(commentData?._id);
+																	setOpenBackdrop(true);
+																}}
+															>
+																<EditIcon sx={{ color: '#757575' }} />
+															</IconButton>
+															<Backdrop
+																sx={{
+																	top: '40%',
+																	right: '25%',
+																	left: '25%',
+																	width: '1000px',
+																	height: 'fit-content',
+																	borderRadius: '10px',
+																	color: '#ffffff',
+																	zIndex: 999,
+																}}
+																open={openBackdrop}
+															>
+																<Stack
+																	sx={{
+																		width: '100%',
+																		height: '100%',
+																		background: 'white',
+																		border: '1px solid #b9b9b9',
+																		padding: '15px',
+																		gap: '10px',
+																		borderRadius: '10px',
+																		boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+																	}}
+																>
+																	<Typography variant="h4" color={'#b9b9b9'}>
+																		Update comment
+																	</Typography>
+																	<Stack gap={'20px'}>
+																		<input
+																			autoFocus
+																			value={updatedComment}
+																			onChange={(e) => updateCommentInputHandler(e.target.value)}
+																			type="text"
+																			style={{
+																				border: '1px solid #b9b9b9',
+																				outline: 'none',
+																				height: '40px',
+																				padding: '0px 10px',
+																				borderRadius: '5px',
+																			}}
+																		/>
+																		<Stack width={'100%'} flexDirection={'row'} justifyContent={'space-between'}>
+																			<Typography variant="subtitle1" color={'#b9b9b9'}>
+																				{updatedCommentWordsCnt}/100
+																			</Typography>
+																			<Stack sx={{ flexDirection: 'row', alignSelf: 'flex-end', gap: '10px' }}>
+																				<Button
+																					variant="outlined"
+																					color="inherit"
+																					onClick={() => cancelButtonHandler()}
+																				>
+																					Cancel
+																				</Button>
+																				<Button
+																					variant="contained"
+																					color="inherit"
+																					onClick={() => updateButtonHandler(updatedCommentId, undefined)}
+																				>
+																					Update
+																				</Button>
+																			</Stack>
+																		</Stack>
+																	</Stack>
+																</Stack>
+															</Backdrop>
+														</Stack>
+													)}
+
+													{/* ____________________________________________________________________________________________________________________________________________ */}
+												</Stack>
+												<Stack className="content">
+													<Typography>{commentData?.commentContent}</Typography>
+												</Stack>
+											</Stack>
+										</Stack>
+									);
+								})}
+								{total > 0 && (
+									<Stack className="pagination-box">
+										<Pagination
+											count={Math.ceil(total / searchFilter.limit) || 1}
+											page={searchFilter.page}
+											shape="circular"
+											color="primary"
+											onChange={paginationHandler}
+										/>
+									</Stack>
+								)}
+							</div>
+						</div>
+
+						{/* ____________________________________________________________________________________________________________________________________________ */}
+
+						<Stack className="left-config">
+							<Stack className={'image-info'}>
+								<img src={'/img/logo/logoHomeCareServices.png'} />
+								<Stack className={'community-name'}>
+									<Typography className={'name'}>HomeCareServices Community</Typography>
+								</Stack>
+							</Stack>
+
+							<Tabs
+								orientation="vertical"
+								aria-label="lab API tabs example"
+								TabIndicatorProps={{
+									style: { display: 'none' },
+								}}
+								onChange={tabChangeHandler}
+								value={articleCategory}
+							>
+								{Object.values(BoardArticleCategory).map((category) => (
+									<Tab
+										key={category}
+										value={category.replace(/_/g, ' ')}
+										label={category
+											.replace(/_/g, ' ')
+											.replace(/\w\S*/g, (word) => word.charAt(0).toUpperCase() + word.substring(1).toLowerCase())}
+										className={`tab-button ${articleCategory === category ? 'active' : ''}`}
+									/>
+								))}
+							</Tabs>
+						</Stack>
+
+						{/* ____________________________________________________________________________________________________________________________________________ */}
 					</Stack>
 				</div>
 			</div>

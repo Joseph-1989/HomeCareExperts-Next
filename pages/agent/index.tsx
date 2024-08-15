@@ -15,6 +15,7 @@ import { LIKE_TARGET_MEMBER } from '../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import { Messages } from '../../libs/config';
 import { likeTargetMemberHandler } from '../../libs/utils';
+import TaskerCard from '../../libs/components/common/TaskerCard';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -122,7 +123,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 			await getAgentsRefetch({ input: searchFilter });
 			await sweetTopSmallSuccessAlert('success', 800);
 		} catch (err: any) {
-			console.log('ERROR, likePropertyHandler:', err.message);
+			console.log('ERROR, likeMemberHandler:', err.message);
 			sweetMixinErrorAlert(err.message).then();
 		}
 	};
@@ -137,7 +138,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 						<Box component={'div'} className={'left'}>
 							<input
 								type="text"
-								placeholder={'Search for an agent'}
+								placeholder={'Search for a tasker'}
 								value={searchText}
 								onChange={(e: any) => setSearchText(e.target.value)}
 								onKeyDown={(event: any) => {
@@ -181,7 +182,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 							</div>
 						) : (
 							agents.map((agent: Member) => {
-								return <AgentCard agent={agent} key={agent._id} likeMemberHandler={likeMemberHandler} />;
+								return <TaskerCard agent={agent} key={agent._id} likeMemberHandler={likeMemberHandler} />;
 							})
 						)}
 					</Stack>
@@ -202,7 +203,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 
 						{agents.length !== 0 && (
 							<span>
-								Total {total} agent{total > 1 ? 's' : ''} available
+								Total {total} tasker{total > 1 ? 's' : ''} available
 							</span>
 						)}
 					</Stack>

@@ -30,7 +30,6 @@ const AdminCommunity: NextPage = ({ initialInquiry, ...props }: any) => {
 	const [searchType, setSearchType] = useState('ALL');
 
 	/** APOLLO REQUESTS **/
-	/** APOLLO REQUESTS **/
 	const [updateBoardArticleByAdmin] = useMutation(UPDATE_BOARD_ARTICLE_BY_ADMIN);
 	const [removeBoardArticleByAdmin] = useMutation(REMOVE_BOARD_ARTICLE_BY_ADMIN);
 
@@ -158,7 +157,7 @@ const AdminCommunity: NextPage = ({ initialInquiry, ...props }: any) => {
 	return (
 		<Box component={'div'} className={'content'}>
 			<Typography variant={'h2'} className={'tit'} sx={{ mb: '24px' }}>
-				Arricle List
+				Article List
 			</Typography>
 			<Box component={'div'} className={'table-wrap'}>
 				<Box component={'div'} sx={{ width: '100%', typography: 'body1' }}>
@@ -195,7 +194,7 @@ const AdminCommunity: NextPage = ({ initialInquiry, ...props }: any) => {
 									</MenuItem>
 									{Object.values(BoardArticleCategory).map((category: string) => (
 										<MenuItem value={category} onClick={() => searchTypeHandler(category)} key={category}>
-											{category}
+											{category.replace(/_/g, ' ')}
 										</MenuItem>
 									))}
 								</Select>

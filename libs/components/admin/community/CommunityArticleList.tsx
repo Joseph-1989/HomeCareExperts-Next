@@ -1,5 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
+import IconButton from '@mui/material/IconButton';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import OpenInBrowserRoundedIcon from '@mui/icons-material/OpenInBrowserRounded';
+import Moment from 'react-moment';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Typography from '@mui/material/Typography';
+import { BoardArticle } from '../../../types/board-article/board-article';
+import { REACT_APP_API_URL } from '../../../config';
+import { BoardArticleStatus } from '../../../enums/board-article.enum';
 import {
 	Box,
 	Button,
@@ -14,16 +24,6 @@ import {
 	TableRow,
 	Tooltip,
 } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import OpenInBrowserRoundedIcon from '@mui/icons-material/OpenInBrowserRounded';
-import Moment from 'react-moment';
-import { BoardArticle } from '../../../types/board-article/board-article';
-import { REACT_APP_API_URL } from '../../../config';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Typography from '@mui/material/Typography';
-import { BoardArticleStatus } from '../../../enums/board-article.enum';
 
 interface Data {
 	category: string;
@@ -132,6 +132,8 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 	const { articles, anchorEl, menuIconClickHandler, menuIconCloseHandler, updateArticleHandler, removeArticleHandler } =
 		props;
 
+	console.log('articles', articles);
+
 	return (
 		<Stack>
 			<TableContainer>
@@ -148,90 +150,92 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 						)}
 
 						{articles.length !== 0 &&
-							articles.map((article: BoardArticle, index: number) => (
-								<TableRow hover key={article._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-									<TableCell align="left">{article._id}</TableCell>
-									<TableCell align="left">
-										<Box component={'div'}>
-											{article.articleTitle}
-											{article.articleStatus === BoardArticleStatus.ACTIVE && (
-												<Link
-													href={`/community/detail?articleCategory=${article.articleCategory}&id=${article._id}`}
-													className={'img_box'}
-												>
-													<IconButton className="btn_window">
-														<Tooltip title={'Open window'}>
-															<OpenInBrowserRoundedIcon />
-														</Tooltip>
-													</IconButton>
-												</Link>
-											)}
-										</Box>
-									</TableCell>
-									<TableCell align="left">{article.articleCategory}</TableCell>
-									<TableCell align="left" className={'name'}>
-										<Link href={`/member?memberId=${article?.memberData?._id}`}>
-											<Avatar
-												alt="Remy Sharp"
-												src={
-													article?.memberData?.memberImage
-														? `${REACT_APP_API_URL}/${article?.memberData?.memberImage}`
-														: `/img/profile/defaultUser.svg`
-												}
-												sx={{ ml: '2px', mr: '10px' }}
-											/>
-											{article?.memberData?.memberNick}
-										</Link>
-									</TableCell>
-									<TableCell align="center">{article?.articleViews}</TableCell>
-									<TableCell align="center">{article?.articleLikes}</TableCell>
-									<TableCell align="left">
-										<Moment format={'DD.MM.YY HH:mm'}>{article?.createdAt}</Moment>
-									</TableCell>
-									<TableCell align="center">
-										{article.articleStatus === BoardArticleStatus.DELETE ? (
-											<Button
-												variant="outlined"
-												sx={{ p: '3px', border: 'none', ':hover': { border: '1px solid #000000' } }}
-												onClick={() => removeArticleHandler(article._id)}
-											>
-												<DeleteIcon fontSize="small" />
-											</Button>
-										) : (
-											<>
-												<Button onClick={(e: any) => menuIconClickHandler(e, index)} className={'badge success'}>
-													{article.articleStatus}
-												</Button>
+							articles.map((article: BoardArticle, index: number) => {
+								const memberImage = `${REACT_APP_API_URL}/${article?.memberData?.memberImage}`;
 
-												<Menu
-													className={'menu-modal'}
-													MenuListProps={{
-														'aria-labelledby': 'fade-button',
-													}}
-													anchorEl={anchorEl[index]}
-													open={Boolean(anchorEl[index])}
-													onClose={menuIconCloseHandler}
-													TransitionComponent={Fade}
-													sx={{ p: 1 }}
+								return (
+									<TableRow hover key={article._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+										<TableCell align="left">{article._id}</TableCell>
+										<TableCell align="left">
+											<Box component={'div'}>
+												{article.articleTitle.replace(/_/g, ' ')}
+												{article.articleStatus === BoardArticleStatus.ACTIVE && (
+													<Link
+														href={`/community/detail?articleCategory=${article.articleCategory}&id=${article._id}`}
+														className={'img_box'}
+													>
+														<IconButton className="btn_window">
+															<Tooltip title={'Open window'}>
+																<OpenInBrowserRoundedIcon />
+															</Tooltip>
+														</IconButton>
+													</Link>
+												)}
+											</Box>
+										</TableCell>
+										<TableCell align="left">{article.articleCategory.replace(/_/g, ' ')}</TableCell>
+										<TableCell align="left" className={'name'}>
+											<Stack className={'memberImage'}>
+												<Link href={`/member?memberId=${article?.memberData?._id}`}>
+													<div>
+														<Avatar alt="Remy Sharp" src={memberImage} sx={{ ml: '2px', mr: '10px' }} />
+													</div>
+												</Link>
+												<Link href={`/member?memberId=${article?.memberData?._id}`}>
+													<div>{article.memberData?.memberNick}</div>
+												</Link>
+											</Stack>
+										</TableCell>
+										<TableCell align="center">{article?.articleViews}</TableCell>
+										<TableCell align="center">{article?.articleLikes}</TableCell>
+										<TableCell align="left">
+											<Moment format={'DD.MM.YY HH:mm'}>{article?.createdAt}</Moment>
+										</TableCell>
+										<TableCell align="center">
+											{article.articleStatus === BoardArticleStatus.DELETE ? (
+												<Button
+													variant="outlined"
+													sx={{ p: '3px', border: 'none', ':hover': { border: '1px solid #000000' } }}
+													onClick={() => removeArticleHandler(article._id)}
 												>
-													{Object.values(BoardArticleStatus)
-														.filter((ele) => ele !== article.articleStatus)
-														.map((status: string) => (
-															<MenuItem
-																onClick={() => updateArticleHandler({ _id: article._id, articleStatus: status })}
-																key={status}
-															>
-																<Typography variant={'subtitle1'} component={'span'}>
-																	{status}
-																</Typography>
-															</MenuItem>
-														))}
-												</Menu>
-											</>
-										)}
-									</TableCell>
-								</TableRow>
-							))}
+													<DeleteIcon fontSize="small" />
+												</Button>
+											) : (
+												<>
+													<Button onClick={(e: any) => menuIconClickHandler(e, index)} className={'badge success'}>
+														{article.articleStatus}
+													</Button>
+
+													<Menu
+														className={'menu-modal'}
+														MenuListProps={{
+															'aria-labelledby': 'fade-button',
+														}}
+														anchorEl={anchorEl[index]}
+														open={Boolean(anchorEl[index])}
+														onClose={menuIconCloseHandler}
+														TransitionComponent={Fade}
+														sx={{ p: 1 }}
+													>
+														{Object.values(BoardArticleStatus)
+															.filter((ele) => ele !== article.articleStatus)
+															.map((status: string) => (
+																<MenuItem
+																	onClick={() => updateArticleHandler({ _id: article._id, articleStatus: status })}
+																	key={status}
+																>
+																	<Typography variant={'subtitle1'} component={'span'}>
+																		{status}
+																	</Typography>
+																</MenuItem>
+															))}
+													</Menu>
+												</>
+											)}
+										</TableCell>
+									</TableRow>
+								);
+							})}
 					</TableBody>
 				</Table>
 			</TableContainer>

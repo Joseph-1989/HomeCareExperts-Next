@@ -12,6 +12,7 @@ export interface CustomJwtPayload extends JwtPayload {
 	memberAddress?: string;
 	memberDesc?: string;
 	memberProperties: number;
+	memberServices: number;
 	memberRank: number;
 	memberArticles: number;
 	memberPoints: number;

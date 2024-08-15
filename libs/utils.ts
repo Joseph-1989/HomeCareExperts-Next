@@ -18,6 +18,19 @@ export const likeTargetPropertyHandler = async (likeTargetProperty: any, id: str
 	}
 };
 
+export const likeTargetServiceHandler = async (likeTargetService: any, id: string) => {
+	try {
+		await likeTargetService({
+			variables: {
+				input: id,
+			},
+		});
+	} catch (err: any) {
+		console.log('ERROR, likeTargetServiceHandler:', err.message);
+		sweetMixinErrorAlert(err.message).then();
+	}
+};
+
 export const likeTargetBoardArticleHandler = async (likeTargetBoardArticle: any, id: string) => {
 	try {
 		await likeTargetBoardArticle({

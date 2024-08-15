@@ -24,12 +24,15 @@ const CommunityCard = (props: CommunityCardProps) => {
 		if (vertical) {
 			return (
 				<Link href={`/community/detail?articleCategory=${article?.articleCategory}&id=${article?._id}`}>
-					<Box component={'div'} className={'vertical-card'}>
+					<Box component={'div'} className={'vertical-community-card'}>
 						<div className={'community-img'} style={{ backgroundImage: `url(${articleImage})` }}>
 							<div>{index + 1}</div>
 						</div>
-						<strong>{article?.articleTitle}</strong>
-						<span>Free Board</span>
+						<strong>{article?.articleTitle.replace(/_/g, ' ')}</strong>
+						<span>
+							<Moment format="DD.MM.YY">{article?.createdAt}</Moment>
+						</span>
+						<span>{article.articleCategory.replace(/_/g, ' ')}</span>
 					</Box>
 				</Link>
 			);
@@ -38,12 +41,13 @@ const CommunityCard = (props: CommunityCardProps) => {
 				<>
 					<Link href={`/community/detail?articleCategory=${article?.articleCategory}&id=${article?._id}`}>
 						<Box component={'div'} className="horizontal-card">
-							<img src={articleImage} alt="" />
+							<img src={articleImage} alt="articleImage" />
 							<div>
-								<strong>{article.articleTitle}</strong>
+								<strong>{article.articleTitle.replace(/_/g, ' ')}</strong>
 								<span>
 									<Moment format="DD.MM.YY">{article?.createdAt}</Moment>
 								</span>
+								<span>{article.articleCategory.replace(/_/g, ' ')}</span>
 							</div>
 						</Box>
 					</Link>

@@ -1,18 +1,19 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/router';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
-import Head from 'next/head';
-import Top from '../Top';
-import Footer from '../Footer';
-import { Stack } from '@mui/material';
 import { getJwtToken, updateUserInfo } from '../../auth';
-import Chat from '../Chat';
 import { useReactiveVar } from '@apollo/client';
-import { userVar } from '../../../apollo/store';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
+import { userVar } from '../../../apollo/store';
+import { Stack } from '@mui/material';
+import useDeviceDetect from '../../hooks/useDeviceDetect';
+import Footer from '../Footer';
+import Head from 'next/head';
+import Chat from '../Chat';
+import Top from '../Top';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import FooterService from '../Footer.service';
 
 const withLayoutBasic = (Component: any) => {
 	return (props: any) => {
@@ -33,35 +34,50 @@ const withLayoutBasic = (Component: any) => {
 					desc = 'We are glad to see you again!';
 					bgImage = '/img/banner/properties.png';
 					break;
+				case '/service':
+					title = 'Service Search';
+					desc = 'We are glad to see you again!';
+					bgImage = '/img/banner/service-page-header.jpg';
+					break;
+				case '/service/detail':
+					title = 'Service Detail';
+					desc = 'We are glad to see you again!';
+					bgImage = '/img/banner/service-page-header.jpg';
+					break;
 				case '/agent':
-					title = 'Agents';
-					desc = 'Home / For Rent';
-					bgImage = '/img/banner/agents.webp';
+					title = 'Taskers';
+					desc = 'Home Care Experts';
+					bgImage = '/img/banner/taskers-page-header2.jpg';
 					break;
 				case '/agent/detail':
-					title = 'Agent Page';
-					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header2.svg';
+					title = 'Tasker Page';
+					desc = 'Home Care Experts';
+					bgImage = '/img/banner/tasker-page-header1.jpgg';
 					break;
-				case '/mypage':
-					title = 'my page';
-					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header1.svg';
+				case '/agent/detail-tasker':
+					title = 'Tasker Page';
+					desc = 'Home Care Experts';
+					bgImage = '/img/banner/tasker-page-header2.jpg';
+					break;
+				case '/userpage':
+					title = 'user page';
+					desc = 'Home services';
+					bgImage = '/img/banner/personal-page-header.jpg';
 					break;
 				case '/community':
-					title = 'Community';
-					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header2.svg';
+					title = 'public';
+					desc = 'Home services';
+					bgImage = '/img/banner/public-page-header4.jpg';
 					break;
 				case '/community/detail':
-					title = 'Community Detail';
-					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header2.svg';
+					title = 'Public Detail';
+					desc = 'Home services';
+					bgImage = '/img/banner/community-detail-page-header3.jpg';
 					break;
 				case '/cs':
-					title = 'CS';
+					title = 'Customer Support Center';
 					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/header2.svg';
+					bgImage = '/img/banner/cs_center4.jpg';
 					break;
 				case '/account/join':
 					title = 'Login/Signup';
@@ -72,7 +88,7 @@ const withLayoutBasic = (Component: any) => {
 				case '/member':
 					title = 'Member Page';
 					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header1.svg';
+					bgImage = '/img/banner/tasker-detail-page-header.jpg';
 					break;
 				default:
 					break;
@@ -93,8 +109,8 @@ const withLayoutBasic = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>Nestar</title>
-						<meta name={'title'} content={`Nestar`} />
+						<title>HomeCareExperts</title>
+						<meta name={'title'} content={`HomeCareExperts`} />
 					</Head>
 					<Stack id="mobile-wrap">
 						<Stack id={'top'}>
@@ -106,7 +122,7 @@ const withLayoutBasic = (Component: any) => {
 						</Stack>
 
 						<Stack id={'footer'}>
-							<Footer />
+							<FooterService />
 						</Stack>
 					</Stack>
 				</>
@@ -115,8 +131,8 @@ const withLayoutBasic = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>Nestar</title>
-						<meta name={'title'} content={`Nestar`} />
+						<title>HomeCareExperts</title>
+						<meta name={'title'} content={`HomeCareExperts`} />
 					</Head>
 					<Stack id="pc-wrap">
 						<Stack id={'top'}>
@@ -128,6 +144,7 @@ const withLayoutBasic = (Component: any) => {
 							style={{
 								backgroundImage: `url(${memoizedValues.bgImage})`,
 								backgroundSize: 'cover',
+								backgroundPosition: 'center',
 								boxShadow: 'inset 10px 40px 150px 40px rgb(24 22 36)',
 							}}
 						>
@@ -144,7 +161,7 @@ const withLayoutBasic = (Component: any) => {
 						<Chat />
 
 						<Stack id={'footer'}>
-							<Footer />
+							<FooterService />
 						</Stack>
 					</Stack>
 				</>

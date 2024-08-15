@@ -1,12 +1,12 @@
 import React from 'react';
 import { Stack, Typography } from '@mui/material';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
-import { Comment } from '../../types/comment/comment';
 import { REACT_APP_API_URL } from '../../config';
-import Moment from 'react-moment';
-import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
+import { useRouter } from 'next/router';
+import { Comment } from '../../types/comment/comment';
 import { userVar } from '../../../apollo/store';
+import useDeviceDetect from '../../hooks/useDeviceDetect';
+import Moment from 'react-moment';
 
 interface ReviewProps {
 	comment: Comment;
@@ -24,7 +24,7 @@ const Review = (props: ReviewProps) => {
 
 	/** HANDLERS **/
 	const goMemberPage = (id: string) => {
-		if (id === user?._id) router.push('/mypage');
+		if (id === user?._id) router.push('/userpage');
 		else router.push(`/member?memberId=${id}`);
 	};
 	if (device === 'mobile') {

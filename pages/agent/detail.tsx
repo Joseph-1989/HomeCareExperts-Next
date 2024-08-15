@@ -1,26 +1,26 @@
+import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import { Box, Button, Pagination, Stack, Typography } from '@mui/material';
+import { GET_COMMENTS, GET_MEMBER, GET_PROPERTIES } from '../../apollo/user/query';
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
+import { CREATE_COMMENT, LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
+import { CommentInput, CommentsInquiry } from '../../libs/types/comment/comment.input';
+import { Messages, REACT_APP_API_URL } from '../../libs/config';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { PropertiesInquiry } from '../../libs/types/property/property.input';
+import { CommentGroup } from '../../libs/enums/comment.enum';
+import { useRouter } from 'next/router';
 import { NextPage } from 'next';
+import { Property } from '../../libs/types/property/property';
+import { userVar } from '../../apollo/store';
+import { Comment } from '../../libs/types/comment/comment';
+import { Member } from '../../libs/types/member/member';
+import { T } from '../../libs/types/common';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import PropertyBigCard from '../../libs/components/common/PropertyBigCard';
 import ReviewCard from '../../libs/components/agent/ReviewCard';
-import { Box, Button, Pagination, Stack, Typography } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
-import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
-import { useRouter } from 'next/router';
-import { Property } from '../../libs/types/property/property';
-import { Member } from '../../libs/types/member/member';
-import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
-import { userVar } from '../../apollo/store';
-import { PropertiesInquiry } from '../../libs/types/property/property.input';
-import { CommentInput, CommentsInquiry } from '../../libs/types/comment/comment.input';
-import { Comment } from '../../libs/types/comment/comment';
-import { CommentGroup } from '../../libs/enums/comment.enum';
-import { Messages, REACT_APP_API_URL } from '../../libs/config';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { GET_COMMENTS, GET_MEMBER, GET_PROPERTIES } from '../../apollo/user/query';
-import { CREATE_COMMENT, LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
-import { T } from '../../libs/types/common';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -132,7 +132,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	/** HANDLERS **/
 	const redirectToMemberPageHandler = async (memberId: string) => {
 		try {
-			if (memberId === user?._id) await router.push(`/mypage?memberId=${memberId}`);
+			if (memberId === user?._id) await router.push(`/userpage?memberId=${memberId}`);
 			else await router.push(`/member?memberId=${memberId}`);
 		} catch (error) {
 			await sweetErrorHandling(error);

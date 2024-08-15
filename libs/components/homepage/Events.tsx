@@ -1,6 +1,7 @@
 import React from 'react';
 import { Stack, Box } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
+import FiberContainer from '../common/FiberContainer';
 
 interface EventData {
 	eventTitle: string;

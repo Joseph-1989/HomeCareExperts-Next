@@ -35,11 +35,26 @@ function Pages() {
 
 	return (
 		<>
-			<Page position={[width * 0, 0, 0]} urls={['/img/fiber/img7.jpg', '/img/fiber/img8.jpg', '/img/fiber/img1.jpg']} />
-			<Page position={[width * 1, 0, 0]} urls={['/img/fiber/img4.jpg', '/img/fiber/img5.jpg', '/img/fiber/img6.jpg']} />
-			<Page position={[width * 2, 0, 0]} urls={['/img/fiber/img2.jpg', '/img/fiber/img3.jpg', '/img/fiber/img4.jpg']} />
-			<Page position={[width * 3, 0, 0]} urls={['/img/fiber/img7.jpg', '/img/fiber/img8.jpg', '/img/fiber/img1.jpg']} />
-			<Page position={[width * 4, 0, 0]} urls={['/img/fiber/img4.jpg', '/img/fiber/img5.jpg', '/img/fiber/img6.jpg']} />
+			<Page
+				position={[width * 0, 0, 0]}
+				urls={['/img/fiber/fiber-1.jpg', '/img/fiber/fiber-6.jpg', '/img/fiber/fiber-11.jpg']}
+			/>
+			<Page
+				position={[width * 1, 0, 0]}
+				urls={['/img/fiber/fiber-2.jpg', '/img/fiber/fiber-7.jpg', '/img/fiber/fiber-12.jpg']}
+			/>
+			<Page
+				position={[width * 2, 0, 0]}
+				urls={['/img/fiber/fiber-3.jpg', '/img/fiber/fiber-8.jpg', '/img/fiber/fiber-13.jpg']}
+			/>
+			<Page
+				position={[width * 3, 0, 0]}
+				urls={['/img/fiber/fiber-4.jpg', '/img/fiber/fiber-9.jpg', '/img/fiber/fiber-14.jpg']}
+			/>
+			<Page
+				position={[width * 4, 0, 0]}
+				urls={['/img/fiber/fiber-5.jpg', '/img/fiber/fiber-10.jpg', '/img/fiber/fiber-15.jpg']}
+			/>
 		</>
 	);
 }
@@ -58,6 +73,5 @@ export default function FiberContainer() {
 				</Suspense>
 			</Canvas>
 		</div>
-
 	);
 }

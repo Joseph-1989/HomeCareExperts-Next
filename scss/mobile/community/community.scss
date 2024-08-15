@@ -1,0 +1,169 @@
+// Mobile styles (assuming a breakpoint of around 768px)
+@media (max-width: 768px) {
+	#mobile-wrap {
+		#community-list-page {
+			.container {
+				padding-top: 50px; // Reduced top padding
+				flex-direction: column;
+				gap: 32px; // Reduced gap
+				background-color: beige !important;
+
+				.main-box {
+					flex-direction: column; // Stack elements vertically
+					gap: 20px;
+					// background-color: rgb(116, 228, 67);
+
+					.left-config {
+						width: 100%; // Full width on mobile
+						padding: 20px; // Reduced padding
+						margin: 0; // Remove margins
+						border-radius: 8px;
+						justify-content: space-around;
+						// background-color: rgb(81, 236, 185);
+
+						.image-info {
+							flex-direction: column; // Stack image and info vertically
+							align-items: center;
+							gap: 10px;
+							// background-color: rgb(199, 223, 65);
+							border-radius: 12px;
+							// border: 1px solid rgba(196, 196, 196, 0.79);
+							box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+							.community-name {
+								.name {
+									text-align: center;
+									// background-color: rgb(233, 199, 112);
+									border-radius: 12px;
+									// border: 1px solid rgba(196, 196, 196, 0.79);
+									box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+									font-weight: 600;
+									margin-bottom: 10px;
+								}
+							}
+
+							img {
+								width: 70px;
+								height: 70px;
+								margin-top: 10px;
+							}
+						}
+
+						.tab-button {
+							width: auto; // Adjust button width to content
+							// background-color: rgb(228, 126, 216);
+							border-radius: 12px;
+							// border: 1px solid rgba(196, 196, 196, 0.79);
+							box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+							font-weight: 600;
+							margin: 10px;
+						}
+					}
+
+					.right-config {
+						width: 100%;
+						.panel-config {
+							// background-color: rgb(204, 49, 142);
+							align-items: center;
+							.title-box {
+								flex-direction: column; // Stack title and button
+								text-align: center;
+								gap: 10px;
+								margin-bottom: 20px;
+								// background-color: rgb(39, 172, 193);
+								align-items: center;
+								.left {
+									width: 100%;
+									// background-color: rgb(185, 212, 76);
+									border-radius: 12px;
+									border: 1px solid rgba(196, 196, 196, 0.79);
+									box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+									font-weight: 900;
+									.title {
+										color: #000;
+										font-family: $font;
+										font-size: 24px;
+										font-style: normal;
+										font-weight: 600;
+										line-height: normal;
+										letter-spacing: 0.24px;
+									}
+									.sub-title {
+										color: #757575;
+										font-family: $font;
+										font-size: 13px;
+										font-style: normal;
+										font-weight: 700;
+										line-height: normal;
+										letter-spacing: 0.325px;
+									}
+								}
+								.right {
+									width: 91px;
+									height: 32px;
+									border-radius: 4px;
+									background: #eb6753;
+									color: #fff;
+									font-family: $font;
+									font-size: 13px;
+									font-style: normal;
+									font-weight: 500;
+									line-height: normal;
+									letter-spacing: 0.39px;
+								}
+							}
+							.list-box {
+								gap: 15px;
+								// background-color: beige;
+								border-radius: 12px;
+								border: 1px solid rgba(196, 196, 196, 0.79);
+								box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+								font-weight: 900;
+								padding: 10px;
+							}
+						}
+					}
+				}
+
+				.similar-articles-config {
+					gap: 40px;
+					padding: 20px;
+					// background-color: rgb(77, 211, 180);
+
+					.similar-articles-title {
+						padding-left: 20px; // Reduced padding
+						font-size: 24px;
+					}
+					.articles-box-row {
+						flex-direction: column;
+						background-color: rgb(45, 58, 174);
+					}
+				}
+
+				.pagination-config {
+					padding: 10px;
+					// background-color: rgb(203, 228, 111);
+					border-radius: 12px;
+					border: 1px solid rgba(196, 196, 196, 0.79);
+					box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+					font-weight: 900;
+					.pagination-box {
+						align-items: center;
+						justify-content: center;
+						margin: 10px;
+					}
+					.total-result {
+						p {
+							color: #181a20;
+							text-align: center;
+							font-family: $font;
+							font-size: 14px;
+							font-style: normal;
+							font-weight: 600;
+							line-height: 26px;
+						}
+					}
+				}
+			}
+		}
+	}
+}

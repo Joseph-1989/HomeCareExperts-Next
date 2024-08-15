@@ -59,3 +59,19 @@ hr {
 		display: flex;
 	}
 }
+
+/** VERSION: MOBILE **/
+#mobile-wrap {
+	width: 430px;
+	height: 932px;
+
+	.container {
+		position: relative;
+		width: 400px;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+	}
+}

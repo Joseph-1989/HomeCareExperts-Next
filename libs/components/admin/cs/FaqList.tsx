@@ -12,15 +12,25 @@ import {
 	Menu,
 	Fade,
 	MenuItem,
+	Box,
+	IconButton,
+	Tooltip,
 } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { Stack } from '@mui/material';
+import { Faq } from '../../../types/faq/faq';
+import { FaqStatus } from '../../../enums/faq.enum';
+import OpenInBrowserRoundedIcon from '@mui/icons-material/OpenInBrowserRounded';
+import { REACT_APP_API_URL } from '../../../config';
+import Moment from 'react-moment';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface Data {
+	id_number: string;
 	category: string;
-	title: string;
-	writer: string;
+	question: string;
+	author: string;
 	date: string;
 	status: string;
 	id?: string;
@@ -47,23 +57,29 @@ interface HeadCell {
 
 const headCells: readonly HeadCell[] = [
 	{
+		id: 'id_number',
+		numeric: true,
+		disablePadding: false,
+		label: 'FAQ ID',
+	},
+	{
 		id: 'category',
 		numeric: true,
 		disablePadding: false,
 		label: 'CATEGORY',
 	},
 	{
-		id: 'title',
+		id: 'question',
 		numeric: true,
 		disablePadding: false,
-		label: 'TITLE',
+		label: 'QUESTION',
 	},
 
 	{
-		id: 'writer',
+		id: 'author',
 		numeric: true,
 		disablePadding: false,
-		label: 'WRITER',
+		label: 'AUTHOR',
 	},
 	{
 		id: 'date',
@@ -109,25 +125,17 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 interface FaqArticlesPanelListType {
-	dense?: boolean;
-	membersData?: any;
-	searchMembers?: any;
-	anchorEl?: any;
-	handleMenuIconClick?: any;
-	handleMenuIconClose?: any;
-	generateMentorTypeHandle?: any;
+	articles: Faq[];
+	anchorEl: any;
+	menuIconClickHandler: any;
+	menuIconCloseHandler: any;
+	updateArticleHandler: any;
+	removeArticleHandler: any;
 }
 
 export const FaqArticlesPanelList = (props: FaqArticlesPanelListType) => {
-	const {
-		dense,
-		membersData,
-		searchMembers,
-		anchorEl,
-		handleMenuIconClick,
-		handleMenuIconClose,
-		generateMentorTypeHandle,
-	} = props;
+	const { articles, anchorEl, menuIconClickHandler, menuIconCloseHandler, updateArticleHandler, removeArticleHandler } =
+		props;
 	const router = useRouter();
 
 	/** APOLLO REQUESTS **/
@@ -137,63 +145,100 @@ export const FaqArticlesPanelList = (props: FaqArticlesPanelListType) => {
 	return (
 		<Stack>
 			<TableContainer>
-				<Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
+				<Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={'medium'}>
 					{/*@ts-ignore*/}
 					<EnhancedTableHead />
 					<TableBody>
-						{[1, 2, 3, 4, 5].map((ele: any, index: number) => {
-							const member_image = '/img/profile/defaultUser.svg';
+						{articles.length === 0 && (
+							<TableRow>
+								<TableCell align="center" colSpan={8}>
+									<span className={'no-data'}>data not found!</span>
+								</TableCell>
+							</TableRow>
+						)}
 
-							let status_class_name = '';
+						{articles.length !== 0 &&
+							articles.map((article: Faq, index: number) => {
+								const memberImage = article?.memberData?.memberImage
+									? `${REACT_APP_API_URL}/${article?.memberData?.memberImage}`
+									: `/img/profile/defaultUser.svg`;
+								return (
+									<TableRow hover key={article._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+										<TableCell align="left">{article._id}</TableCell>
+										<TableCell align="left">{article.faqCategory.replace(/_/g, ' ')}</TableCell>
+										<TableCell align="left">
+											<Box component={'div'}>
+												{article.faqTitle.replace(/_/g, ' ')}
+												{article.faqStatus === FaqStatus.ACTIVE && (
+													<Link href={`/cs?=${article.faqTitle}#${article._id}`} className={'img_box'}>
+														<IconButton className="btn_window">
+															<Tooltip title={'Open window'}>
+																<OpenInBrowserRoundedIcon />
+															</Tooltip>
+														</IconButton>
+													</Link>
+												)}
+											</Box>
+										</TableCell>
 
-							return (
-								<TableRow hover key={'member._id'} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-									<TableCell align="left">mb id</TableCell>
-									<TableCell align="left">member.mb_full_name</TableCell>
-									<TableCell align="left" className={'name'}>
-										<Stack direction={'row'}>
-											<Link href={`/_admin/users/detail?mb_id=$'{member._id'}`}>
+										<TableCell align="left" className={'name'}>
+											<Link href={`/member?memberId=${article?.memberData?._id}`}>
 												<div>
-													<Avatar alt="Remy Sharp" src={member_image} sx={{ ml: '2px', mr: '10px' }} />
+													<Avatar alt="Remy Sharp" src={memberImage} sx={{ ml: '2px', mr: '10px' }} />
 												</div>
 											</Link>
-											<Link href={`/_admin/users/detail?mb_id=${'member._id'}`}>
-												<div>member.mb_nick</div>
+											<Link href={`/member?memberId=${article?.memberData?._id}`}>
+												<div>{article.memberData?.memberNick}</div>
 											</Link>
-										</Stack>
-									</TableCell>
-									<TableCell align="left">member.mb_phone</TableCell>
-									<TableCell align="center">
-										<Button onClick={(e: any) => handleMenuIconClick(e, index)} className={'badge success'}>
-											member.mb_type
-										</Button>
+										</TableCell>
+										<TableCell align="left">
+											<Moment format={'DD.MM.YY HH:mm'}>{article?.createdAt}</Moment>
+										</TableCell>
+										<TableCell align="center">
+											{article.faqStatus === FaqStatus.DELETE ? (
+												<Button
+													variant="outlined"
+													sx={{ p: '3px', border: 'none', ':hover': { border: '1px solid #000000' } }}
+													onClick={() => removeArticleHandler(article._id)}
+												>
+													<DeleteIcon fontSize="small" />
+												</Button>
+											) : (
+												<>
+													<Button onClick={(e: any) => menuIconClickHandler(e, index)} className={'badge success'}>
+														{article.faqStatus}
+													</Button>
 
-										<Menu
-											className={'menu-modal'}
-											MenuListProps={{
-												'aria-labelledby': 'fade-button',
-											}}
-											anchorEl={anchorEl[index]}
-											open={Boolean(anchorEl[index])}
-											onClose={handleMenuIconClose}
-											TransitionComponent={Fade}
-											sx={{ p: 1 }}
-										>
-											<MenuItem onClick={(e) => generateMentorTypeHandle('member._id', 'mentor', 'originate')}>
-												<Typography variant={'subtitle1'} component={'span'}>
-													MENTOR
-												</Typography>
-											</MenuItem>
-											<MenuItem onClick={(e) => generateMentorTypeHandle('member._id', 'user', 'remove')}>
-												<Typography variant={'subtitle1'} component={'span'}>
-													USER
-												</Typography>
-											</MenuItem>
-										</Menu>
-									</TableCell>
-								</TableRow>
-							);
-						})}
+													<Menu
+														className={'menu-modal'}
+														MenuListProps={{
+															'aria-labelledby': 'fade-button',
+														}}
+														anchorEl={anchorEl[index]}
+														open={Boolean(anchorEl[index])}
+														onClose={menuIconCloseHandler}
+														TransitionComponent={Fade}
+														sx={{ p: 1 }}
+													>
+														{Object.values(FaqStatus)
+															.filter((ele) => ele !== article.faqStatus)
+															.map((status: string) => (
+																<MenuItem
+																	onClick={() => updateArticleHandler({ _id: article._id, faqStatus: status })}
+																	key={status}
+																>
+																	<Typography variant={'subtitle1'} component={'span'}>
+																		{status}
+																	</Typography>
+																</MenuItem>
+															))}
+													</Menu>
+												</>
+											)}
+										</TableCell>
+									</TableRow>
+								);
+							})}
 					</TableBody>
 				</Table>
 			</TableContainer>

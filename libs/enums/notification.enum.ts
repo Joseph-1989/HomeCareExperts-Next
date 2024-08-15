@@ -12,4 +12,5 @@ export enum NotificationGroup {
 	MEMBER = 'MEMBER',
 	ARTICLE = 'ARTICLE',
 	PROPERTY = 'PROPERTY',
+	SERVICE = 'SERVICE',
 }
