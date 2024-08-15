@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery, useReactiveVar } from '@apollo/client';
-import { GET_NOTIFICATIONS } from '../../../apollo/user/query';
-import { NotificationStructure } from '../../types/notification/notification';
 import { useRouter } from 'next/router';
 import { Popover } from '@mui/material'; // Example MUI components
-import { NotificationsInquiry } from '../../types/notification/notification.input';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { userVar } from '../../../apollo/store';
 import { MdNotificationsActive } from 'react-icons/md';
 import { VscEyeClosed } from 'react-icons/vsc';
 import { FaRegWindowClose } from 'react-icons/fa';
+import { NotificationStructure } from '../../types/notification/notification';
+import { GET_NOTIFICATIONS } from '../../../apollo/user/query';
+import { NotificationsInquiry } from '../../types/notification/notification.input';
 
 const NotificationComponent: NextPage = ({}) => {
 	const device = useDeviceDetect();
@@ -23,7 +23,7 @@ const NotificationComponent: NextPage = ({}) => {
 	const [isContainerVisible, setIsContainerVisible] = useState(false);
 	const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-	const NotificationsInquiry: NotificationsInquiry = {
+	const notificationsInquiry: NotificationsInquiry = {
 		page: 1,
 		limit: 10,
 		sort: 'createdAt',
@@ -39,8 +39,8 @@ const NotificationComponent: NextPage = ({}) => {
 		refetch: getNotificationsRefetch,
 	} = useQuery(GET_NOTIFICATIONS, {
 		fetchPolicy: 'cache-and-network',
-		variables: { input: NotificationsInquiry },
-		skip: !NotificationsInquiry.search.receiverId,
+		variables: { input: notificationsInquiry },
+		skip: !notificationsInquiry.search.receiverId,
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data) => {
 			setSelectedNotification(data?.getNotifications?.list);
