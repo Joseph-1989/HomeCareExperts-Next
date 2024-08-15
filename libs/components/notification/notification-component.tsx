@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery, useReactiveVar } from '@apollo/client';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { useRouter } from 'next/router';
-import { Popover } from '@mui/material'; // Example MUI components
+import { Badge, Popover } from '@mui/material'; // Example MUI components
 import { NextPage } from 'next';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { userVar } from '../../../apollo/store';
@@ -11,6 +11,8 @@ import { FaRegWindowClose } from 'react-icons/fa';
 import { NotificationStructure } from '../../types/notification/notification';
 import { GET_NOTIFICATIONS } from '../../../apollo/user/query';
 import { NotificationsInquiry } from '../../types/notification/notification.input';
+import { UPDATE_NOTIFICATION_STATUS } from '../../../apollo/user/mutation';
+import { NotificationStatus } from '../../enums/notification.enum';
 
 const NotificationComponent: NextPage = ({}) => {
 	const device = useDeviceDetect();
@@ -32,6 +34,8 @@ const NotificationComponent: NextPage = ({}) => {
 		},
 	};
 
+	const [updateNotificationStatus] = useMutation(UPDATE_NOTIFICATION_STATUS);
+
 	const {
 		loading: getNotificationsLoading,
 		data: getNotificationsData,
@@ -52,27 +56,42 @@ const NotificationComponent: NextPage = ({}) => {
 		},
 	});
 
+	console.log('notifications', notifications);
+	console.log('getNotificationsData', getNotificationsData);
+
 	const toggleContainer = (event: any) => {
 		setAnchorEl(event.currentTarget);
 		setIsContainerVisible(!isContainerVisible);
 	};
 
-	const markAsRead = (notificationId: string) => {
-		setNotifications((prevNotifications) =>
-			prevNotifications.map((notification) =>
-				notification._id === notificationId ? { ...notification, read: true } : notification,
-			),
-		);
+	const markAsRead = async (notification: NotificationStructure) => {
+		if (notification.notificationStatus !== NotificationStatus.READ) {
+			try {
+				await updateNotificationStatus({
+					variables: {
+						id: notification._id,
+						status: NotificationStatus.READ,
+					},
+				});
+				// Update the notification status locally
+				setNotifications((prevNotifications) =>
+					prevNotifications.map((n) =>
+						n._id === notification._id ? { ...n, notificationStatus: NotificationStatus.READ } : n,
+					),
+				);
+			} catch (error) {
+				console.error('Failed to update notification status', error);
+			}
+		}
 	};
 
 	const handleClick = (event: React.MouseEvent<HTMLElement>, notification: NotificationStructure) => {
 		setAnchorEl(event.currentTarget);
 		setSelectedNotification(notification);
-		markAsRead(notification._id);
+		markAsRead(notification);
 	};
 
 	const handleClose = () => {
-		console.log('Close button clicked'); // Debugging statement
 		setAnchorEl(null);
 		setSelectedNotification(null);
 		setIsContainerVisible(false);
@@ -95,12 +114,6 @@ const NotificationComponent: NextPage = ({}) => {
 	}, [getNotificationsData]);
 
 	useEffect(() => {
-		if (getNotificationsData) {
-			console.log('Fetched notifications:', getNotificationsData.getNotifications.list);
-		}
-	}, [getNotificationsData]);
-
-	useEffect(() => {
 		if (getNotificationsData?.getNotifications?.list) {
 			setSelectedNotification(getNotificationsData.getNotifications.list);
 			getNotificationsData.getNotifications.list.forEach((notification: { _id: any }) => {
@@ -114,9 +127,11 @@ const NotificationComponent: NextPage = ({}) => {
 
 	return (
 		<div className="notification-wrapper">
-			<button onClick={toggleContainer} className="notification-bell">
-				<MdNotificationsActive size={24} color="whitesmoke" />
-			</button>
+			<Badge badgeContent={notificationTotal} color="secondary" overlap="circular">
+				<button onClick={toggleContainer} className="notification-bell">
+					<MdNotificationsActive size={24} color="whitesmoke" />
+				</button>
+			</Badge>
 
 			{isContainerVisible && (
 				<div className={'notification-container'}>
@@ -127,22 +142,23 @@ const NotificationComponent: NextPage = ({}) => {
 						</button>
 						<h1>Notifications</h1>
 						<ul>
-							{getNotificationsData &&
-							getNotificationsData.getNotifications &&
-							Array.isArray(getNotificationsData.getNotifications.list) ? (
-								getNotificationsData.getNotifications.list.map((notification: NotificationStructure) => (
-									<li
-										key={notification._id}
-										className={`notification-item ${notification.notificationStatus ? 'read' : 'wait'}`}
-										onClick={(event) => handleNotificationClick(notification, event)}
-									>
-										<h2 onClick={(event) => handleClick(event, notification)}>{notification.notificationTitle}</h2>
-										<p>{notification.notificationDesc}</p>
-									</li>
-								))
-							) : (
-								<div>Loading notifications...</div>
-							)}
+							{getNotificationsData.getNotifications?.list.map((notification: NotificationStructure) => (
+								<li
+									key={notification._id}
+									className={`notification-item ${
+										notification.notificationStatus === NotificationStatus.READ
+											? NotificationStatus.READ
+											: NotificationStatus.WAIT
+									}`}
+									onClick={(event) => handleNotificationClick(notification, event)}
+									style={{
+										backgroundColor: notification.notificationStatus === NotificationStatus.READ ? '#e0e0e0' : 'white',
+									}}
+								>
+									<h2 onClick={(event) => handleClick(event, notification)}>{notification.notificationTitle}</h2>
+									<p>{notification.notificationDesc}</p>
+								</li>
+							))}
 						</ul>
 
 						<Popover

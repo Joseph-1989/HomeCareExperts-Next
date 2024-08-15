@@ -44,34 +44,40 @@ const withLayoutBasic = (Component: any) => {
 					desc = 'We are glad to see you again!';
 					bgImage = '/img/banner/service-page-header.jpg';
 					break;
+
+				case '/about':
+					title = 'About';
+					desc = 'We are glad to see you again!';
+					bgImage = '/img/banner/about-page-header.jpg';
+					break;
 				case '/agent':
 					title = 'Taskers';
-					desc = 'Home Care Experts';
+					desc = 'We are glad to see you again!';
 					bgImage = '/img/banner/taskers-page-header2.jpg';
 					break;
 				case '/agent/detail':
 					title = 'Tasker Page';
-					desc = 'Home Care Experts';
+					desc = 'We are glad to see you again!';
 					bgImage = '/img/banner/tasker-page-header1.jpgg';
 					break;
 				case '/agent/detail-tasker':
-					title = 'Tasker Page';
-					desc = 'Home Care Experts';
+					title = 'We are glad to see you again!';
+					desc = 'Home services';
 					bgImage = '/img/banner/tasker-page-header2.jpg';
 					break;
 				case '/userpage':
 					title = 'user page';
-					desc = 'Home services';
+					desc = 'We are glad to see you again!';
 					bgImage = '/img/banner/personal-page-header.jpg';
 					break;
 				case '/community':
 					title = 'public';
-					desc = 'Home services';
+					desc = 'We are glad to see you again!';
 					bgImage = '/img/banner/public-page-header4.jpg';
 					break;
 				case '/community/detail':
 					title = 'Public Detail';
-					desc = 'Home services';
+					desc = 'We are glad to see you again!';
 					bgImage = '/img/banner/community-detail-page-header3.jpg';
 					break;
 				case '/cs':
@@ -82,12 +88,12 @@ const withLayoutBasic = (Component: any) => {
 				case '/account/join':
 					title = 'Login/Signup';
 					desc = 'Authentication Process';
-					bgImage = '/img/banner/header2.svg';
+					bgImage = '/img/banner/join-page-header3.jpg';
 					setAuthHeader(true);
 					break;
 				case '/member':
 					title = 'Member Page';
-					desc = 'Home / For Rent';
+					desc = 'We are glad to see you again!';
 					bgImage = '/img/banner/tasker-detail-page-header.jpg';
 					break;
 				default:

@@ -1,5 +1,6 @@
 {
 	"Home": "홈",
+	"About": "소개",
 	"Services": "서비스",
 	"Taskers": "작업자",
 	"Public": "공개",
@@ -18,5 +19,6 @@
 	"My Page": "마이 페이지",
 	"Community Detail": "커뮤니티 디테일",
 	"Login/Signup": "로그인/가입",
-	"Member Page": "멤버 페이지"
+	"Member Page": "멤버 페이지",
+	"We are glad to see you again!": "다시 만나서 반��습니다!"
 }

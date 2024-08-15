@@ -584,15 +584,15 @@ body::-webkit-scrollbar {
 	}
 
 	.header-basic {
-		height: 657px;
+		height: 1000px;
 
 		&.auth {
-			height: 300px;
+			height: 800px;
 		}
 		.container {
 			margin-top: 175px;
 			strong {
-				color: #c0a06b;
+				color: white;
 				font-family: $font;
 				font-size: 48px;
 				font-style: normal;
@@ -602,11 +602,11 @@ body::-webkit-scrollbar {
 				text-transform: capitalize;
 			}
 			span {
-				color: #c0a06b;
+				color: white;
 				font-family: $font;
 				font-size: 24px;
 				font-style: normal;
-				font-weight: 400;
+				font-weight: 600;
 				line-height: 26px;
 			}
 		}

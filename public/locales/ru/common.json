@@ -1,5 +1,6 @@
 {
 	"Home": "Главная",
+	"About": "О нас",
 	"Services": "Услуги",
 	"Taskers": "Исполнитель",
 	"Public": "Публичные",
@@ -18,5 +19,6 @@
 	"My Page": "Моя страница",
 	"Community Detail": "Детали сообщества",
 	"Login/Signup": "Логин/Регистрация",
-	"Member Page": "Страница участника"
+	"Member Page": "Страница участника",
+	"We are glad to see you again!": "Мы рады видеть вас снова!"
 }

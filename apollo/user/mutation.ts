@@ -591,6 +591,30 @@ export const MARK_NOTIFICATIONS_AS_READ = gql`
 	}
 `;
 
+export const UPDATE_NOTIFICATION_STATUS = gql`
+	mutation UpdateNotificationStatus($id: String!, $status: String!) {
+		updateNotificationStatus(id: $id, status: $status) {
+			_id
+			notificationType
+			notificationStatus
+			notificationGroup
+			notificationTitle
+			notificationDesc
+			authorId
+			receiverId
+			targetObjectId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+/**************************
+ *         QNA           *
+ *************************
+
+
+
 /**************************
  *         NOTICE        *
  *************************/

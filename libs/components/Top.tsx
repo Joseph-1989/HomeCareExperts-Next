@@ -146,14 +146,16 @@ const Top = () => {
 		window.addEventListener('scroll', changeNavbarColor);
 	}
 
-	console.log('user', user);
-
 	if (device == 'mobile') {
 		return (
 			<Stack className={'top'}>
 				<Link href={'/'}>
 					<div>{t('Home')}</div>
 				</Link>
+				<Link href={'/about'}>
+					<div>{t('About')}</div>
+				</Link>
+
 				{/* <Link href={'/property'}>
 					<div>{t('Properties')}</div>
 				</Link> */}
@@ -190,6 +192,11 @@ const Top = () => {
 							<Link href={'/'}>
 								<div>{t('Home')}</div>
 							</Link>
+
+							<Link href={'/about'}>
+								<div>{t('About')}</div>
+							</Link>
+
 							{/* <Link href={'/property'}>
 								<div>{t('Properties')}</div>
 							</Link> */}
