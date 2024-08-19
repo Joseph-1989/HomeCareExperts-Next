@@ -56,9 +56,6 @@ const NotificationComponent: NextPage = ({}) => {
 		},
 	});
 
-	console.log('notifications', notifications);
-	console.log('getNotificationsData', getNotificationsData);
-
 	const toggleContainer = (event: any) => {
 		setAnchorEl(event.currentTarget);
 		setIsContainerVisible(!isContainerVisible);
@@ -116,9 +113,7 @@ const NotificationComponent: NextPage = ({}) => {
 	useEffect(() => {
 		if (getNotificationsData?.getNotifications?.list) {
 			setSelectedNotification(getNotificationsData.getNotifications.list);
-			getNotificationsData.getNotifications.list.forEach((notification: { _id: any }) => {
-				console.log('Notification _id:', notification._id); // Check if _id is present
-			});
+			getNotificationsData.getNotifications.list.forEach((notification: { _id: any }) => {});
 		}
 	}, [getNotificationsData]);
 

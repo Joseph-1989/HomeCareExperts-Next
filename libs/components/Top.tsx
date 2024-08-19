@@ -61,8 +61,6 @@ const Top = () => {
 	useEffect(() => {
 		const jwt = getJwtToken();
 		if (jwt) updateUserInfo(jwt);
-
-		console.log('jwt', jwt);
 	}, []);
 
 	/** HANDLERS **/
