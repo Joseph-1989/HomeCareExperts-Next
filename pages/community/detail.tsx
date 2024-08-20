@@ -28,6 +28,7 @@ import { LiaSmsSolid } from 'react-icons/lia';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import { IoChatbubbleOutline } from 'react-icons/io5';
 import ChatIcon from '@mui/icons-material/Chat';
 import EditIcon from '@mui/icons-material/Edit';
 import dynamic from 'next/dynamic';
@@ -350,7 +351,11 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 											</Stack>
 											<Stack className="divider"></Stack>
 											<Stack className="icon-info">
-												{total > 0 ? <ChatIcon /> : <ChatBubbleOutlineRoundedIcon />}
+												{total > 0 ? (
+													<ChatIcon style={{ fontSize: 24 }} />
+												) : (
+													<ChatBubbleOutlineRoundedIcon style={{ fontSize: 24 }} />
+												)}
 
 												<Typography className="text">{total}</Typography>
 											</Stack>
@@ -623,7 +628,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 											</Stack>
 											<Stack className="divider"></Stack>
 											<Stack className="icon-info">
-												{total > 0 ? <LiaSmsSolid size={24} /> : <ChatIcon size={24} />}
+												{total > 0 ? <LiaSmsSolid size={24} /> : <ChatIcon style={{ fontSize: 24 }} />}
 
 												<Typography className="text">{total}</Typography>
 											</Stack>

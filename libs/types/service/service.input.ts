@@ -58,7 +58,7 @@ export interface AgentServicesInquiry {
 
 export interface ALSISearch {
 	serviceStatus?: ServiceStatus;
-	serviceLocationList?: ServiceLocation;
+	serviceLocationList?: ServiceLocation[];
 	memberId?: string;
 }
 
