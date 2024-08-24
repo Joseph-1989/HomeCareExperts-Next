@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Box, Button, Divider, FormControl, MenuItem, Modal, Select, SelectChangeEvent, Stack } from '@mui/material';
+import { Box, Button, Divider, FormControl, MenuItem, Modal, Select, Stack } from '@mui/material';
 import { ServiceCategory, ServiceLocation, ServicePricingModel } from '../../enums/service.enum';
 import { ServiceOptionsInput, ServicesInquiry } from '../../types/service/service.input';
 import { useTranslation } from 'react-i18next';
@@ -8,9 +8,6 @@ import { useRouter } from 'next/router';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import CloseIcon from '@mui/icons-material/Close';
-import { serviceYears } from '../../config';
-import { Service } from '../../types/service/service';
-import CreatedDateFilterComponent from './CreatedDateFilterComponent';
 
 const style = {
 	position: 'absolute' as 'absolute',

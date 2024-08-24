@@ -117,7 +117,7 @@ const CreateFaq = () => {
 
 			{error && <p style={{ color: 'red' }}>Error: {error.message}</p>}
 
-			<Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+			<Box component={'div'} sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
 				<Button variant="contained" color="primary" type="submit" disabled={loading}>
 					{loading ? 'Creating...' : 'Create FAQ'}
 				</Button>

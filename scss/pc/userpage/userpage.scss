@@ -6,28 +6,21 @@
 			align-items: center;
 
 			.my-page {
-				padding: 96px 196px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
 				border-radius: 12px;
-				border: 5px solid;
 				margin: 70px 0;
-				background-color: wheat;
 
 				.back-frame {
-					padding: 40px 60px;
 					flex-direction: row-reverse;
-					gap: 60px;
 					border-radius: 12px;
-					border: 1px solid;
 					box-shadow: 0px 1px 4px 0px #181a2012;
-					background-color: black;
+					gap: 60px;
 
 					.left-config {
-						min-height: 1300px;
-						padding: 70px 70px 0;
 						border-radius: 12px;
-						border: 1px solid;
 						align-items: center;
-						background-color: wheat;
 
 						.profile-stack {
 							width: 366px;
@@ -37,8 +30,7 @@
 							display: flex;
 							justify-content: center;
 							align-items: center;
-							padding: 50px;
-							background-color: white;
+							padding: 50px 0 0 0;
 
 							.profile {
 								justify-content: center;
@@ -188,19 +180,14 @@
 						}
 					}
 					.main-config {
-						min-height: 1400px;
-						padding: 70px;
 						align-items: center;
-						border: 1px solid;
 						border-radius: 12px;
-						background-color: wheat;
 						.list-config {
-							width: 1300px;
+							width: 1200px;
 							min-height: 1300px;
-							padding: 40px;
+							padding: 40px 20px 0;
 							border-radius: 12px;
 							border: solid 1px;
-							background-color: #ffffff;
 							.card-config {
 								margin-bottom: 7px;
 								border-radius: 12px;
@@ -227,7 +214,7 @@
 										align-items: center;
 										border-radius: 6px;
 										padding: 6px 20px;
-										background: #eb6753;
+										background: #9fda6c;
 										color: #fff;
 										text-align: center;
 										text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

@@ -10,11 +10,11 @@ import Footer from '../Footer';
 import Head from 'next/head';
 import Chat from '../Chat';
 import Top from '../Top';
+import FooterService from '../Footer.service';
+import HooksMain from '../common/HooksMain';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import ServiceCategories, { servicesData } from '../homepage/ServiceCategories';
-import FooterService from '../Footer.service';
 
 const withLayoutMain = (Component: any) => {
 	return (props: any) => {
@@ -64,10 +64,11 @@ const withLayoutMain = (Component: any) => {
 						</Stack>
 
 						<Stack className={'header-main'}>
-							<ServiceCategories services={servicesData} />
 							{/* <FiberContainer /> */}
+							<HooksMain />
 							<Stack className={'container'}>
 								{/* <HeaderFilter /> */}
+
 								<HeaderServiceFilter />
 							</Stack>
 						</Stack>

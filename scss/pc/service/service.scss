@@ -6,7 +6,7 @@
 		padding: 40px;
 		width: auto;
 		.container {
-			border: solid 1px;
+			// border: solid 1px;
 			border-radius: 12px;
 			width: auto;
 			padding: 50px;
@@ -39,10 +39,9 @@
 				gap: 25px;
 
 				.filter-config {
-					padding: 70px 60px 0;
-					border: solid 1px;
+					// padding: 70px 60px 0;
+					// border: solid 1px;
 					border-radius: 12px;
-					background-color: wheat;
 
 					.filter-main {
 						width: 300px;
@@ -255,11 +254,12 @@
 				.main-config {
 					width: auto;
 					height: auto;
-					padding: 70px;
+					padding: 0 0 70px 0;
 					align-items: center;
+					justify-content: center;
 					border: solid 1px;
 					border-radius: 12px;
-					background: wheat;
+					// background: wheat;
 
 					.list-config {
 						display: flex;
@@ -268,7 +268,7 @@
 						flex-direction: row;
 						flex-wrap: wrap;
 						gap: 23px;
-						border: solid 1px;
+						// border: solid 1px;
 						border-radius: 12px;
 						padding: 30px;
 						margin: 0 0 50px 0;
@@ -279,9 +279,9 @@
 							width: 380px;
 							height: 550px;
 							padding: 10px;
-							border: solid 1px burlywood;
+							border: solid 1px gray;
 							border-radius: 12px;
-							background: wheat;
+							background: whitesmoke;
 							box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
 
 							.top {

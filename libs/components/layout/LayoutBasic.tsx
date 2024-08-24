@@ -37,23 +37,27 @@ const withLayoutBasic = (Component: any) => {
 				case '/service':
 					title = 'Service Search';
 					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/service-page-header.jpg';
+					bgImage = '/img/banner/types/header8.jpg';
+					// bgImage = '/img/banner/types/header1.jpg';
 					break;
 				case '/service/detail':
 					title = 'Service Detail';
 					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/service-page-header.jpg';
+					bgImage = '/img/banner/types/header1.jpg';
+					// bgImage = '/img/banner/service-page-header.jpg';
 					break;
 
 				case '/about':
 					title = 'About';
 					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/about-page-header.jpg';
+					bgImage = '/img/banner/types/header7.jpg';
+					// bgImage = '/img/banner/about-page-header.jpg';
 					break;
 				case '/agent':
 					title = 'Taskers';
 					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/taskers-page-header2.jpg';
+					bgImage = '/img/banner/types/header9.jpg';
+					// bgImage = '/img/banner/taskers-page-header2.jpg';
 					break;
 				case '/agent/detail':
 					title = 'Tasker Page';
@@ -63,22 +67,26 @@ const withLayoutBasic = (Component: any) => {
 				case '/agent/detail-tasker':
 					title = 'We are glad to see you again!';
 					desc = 'Home services';
-					bgImage = '/img/banner/tasker-page-header2.jpg';
+					bgImage = '/img/banner/types/header2.jpg';
+					// bgImage = '/img/banner/tasker-page-header2.jpg';
 					break;
 				case '/userpage':
 					title = 'user page';
 					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/personal-page-header.jpg';
+					bgImage = '/img/banner/types/header4.jpg';
+					// bgImage = '/img/banner/personal-page-header.jpg';
 					break;
 				case '/community':
 					title = 'public';
 					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/public-page-header4.jpg';
+					bgImage = '/img/banner/types/header3.jpg';
+					// bgImage = '/img/banner/public-page-header4.jpg';
 					break;
 				case '/community/detail':
 					title = 'Public Detail';
 					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/community-detail-page-header3.jpg';
+					bgImage = '/img/banner/types/header6.jpg';
+					// bgImage = '/img/banner/community-detail-page-header3.jpg';
 					break;
 				case '/cs':
 					title = 'Customer Support Center';
@@ -94,7 +102,8 @@ const withLayoutBasic = (Component: any) => {
 				case '/member':
 					title = 'Member Page';
 					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/tasker-detail-page-header.jpg';
+					bgImage = '/img/banner/types/header5.jpg';
+					// bgImage = '/img/banner/tasker-detail-page-header.jpg';
 					break;
 				default:
 					break;

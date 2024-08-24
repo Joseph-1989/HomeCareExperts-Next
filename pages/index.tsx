@@ -18,6 +18,7 @@ import TopServices from '../libs/components/homepage/TopServices';
 import TrendServices from '../libs/components/homepage/TrendServices';
 import PopularServices from '../libs/components/homepage/PopularServices';
 import TopTaskers from '../libs/components/homepage/TopTaskers';
+import ServiceCategories, { servicesData } from '../libs/components/homepage/ServiceCategories';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -46,6 +47,7 @@ const Home: NextPage = () => {
 	} else {
 		return (
 			<Stack className={'home-page'}>
+				<ServiceCategories services={servicesData} />
 				<BusinessPartnership />
 				<CostGuides />
 				<AppPromo />

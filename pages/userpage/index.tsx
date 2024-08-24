@@ -4,10 +4,6 @@ import { NextPage } from 'next';
 import { Stack } from '@mui/material';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import MyProperties from '../../libs/components/userpage/MyProperties';
-import MyFavorites from '../../libs/components/userpage/MyFavorites';
-import RecentlyVisited from '../../libs/components/userpage/RecentlyVisited';
-import AddProperty from '../../libs/components/userpage/AddNewProperty';
 import MyProfile from '../../libs/components/userpage/MyProfile';
 import MyArticles from '../../libs/components/userpage/MyArticles';
 import { useMutation, useReactiveVar } from '@apollo/client';
@@ -125,13 +121,9 @@ const UserPage: NextPage = () => {
 							</Stack>
 							<Stack className="main-config" mb={'76px'}>
 								<Stack className={'list-config'}>
-									{category === 'addProperty' && <AddProperty />}
 									{category === 'addService' && <AddService />}
-									{category === 'myProperties' && <MyProperties />}
 									{category === 'myServices' && <MyServices />}
-									{category === 'myFavorites' && <MyFavorites />}
 									{category === 'myFavorites_Service' && <MyFavorites_Service />}
-									{category === 'recentlyVisited' && <RecentlyVisited />}
 									{category === 'recentlyVisited_Service' && <RecentlyVisited_Service />}
 									{category === 'myArticles' && <MyArticles />}
 									{category === 'writeArticle' && <WriteArticle />}
