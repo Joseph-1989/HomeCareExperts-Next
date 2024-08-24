@@ -61,11 +61,12 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 		if (router.query.input) {
 			const input_obj = JSON.parse(router?.query?.input as string);
 			setSearchFilter(input_obj);
+			getAgentsRefetch({ input: input_obj });
 		} else
 			router.replace(`/agent?input=${JSON.stringify(searchFilter)}`, `/agent?input=${JSON.stringify(searchFilter)}`);
 
 		setCurrentPage(searchFilter.page === undefined ? 1 : searchFilter.page);
-	}, [router]);
+	}, [router.query.input]);
 
 	/** HANDLERS **/
 	const sortingClickHandler = (e: MouseEvent<HTMLElement>) => {
@@ -102,8 +103,9 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 	};
 
 	const paginationChangeHandler = async (event: ChangeEvent<unknown>, value: number) => {
-		searchFilter.page = value;
-		await router.push(`/agent?input=${JSON.stringify(searchFilter)}`, `/agent?input=${JSON.stringify(searchFilter)}`, {
+		setCurrentPage(value);
+		setSearchFilter({ ...searchFilter, page: value });
+		await router.push(`/agent?input=${JSON.stringify({ ...searchFilter, page: value })}`, undefined, {
 			scroll: false,
 		});
 		setCurrentPage(value);
